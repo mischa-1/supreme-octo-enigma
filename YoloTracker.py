@@ -33,7 +33,7 @@ def main():
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    model = YOLO("yolo11n.pt")
+    model = YOLO("yolov8n.pt")
     model.to(device)
 
     cap = cv2.VideoCapture(0)
