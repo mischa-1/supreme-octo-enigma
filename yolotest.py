@@ -55,13 +55,13 @@ else:
 
 def main():
     device = "mps" if torch.backends.mps.is_available() else "cpu"
-    print(f"Using device: {device}")
+    #print(f"Using device: {device}")
 
     model = YOLO("yolov8n.pt")
     model.to(device)
 
     #print("Debug 1")
-    print("Debug 1", flush=True)
+    #print("Debug 1", flush=True)
     cap = cv2.VideoCapture(0)
     #gst = (
     #    "libcamerasrc ! "
@@ -70,7 +70,7 @@ def main():
     #)
     #cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
     #print("Debug 2")
-    print("Debug 2 - cap.isOpened():", cap.isOpened(), flush=True)
+    #print("Debug 2 - cap.isOpened():", cap.isOpened(), flush=True)
 
     if not cap.isOpened():
         print("Camera error (cap.isOpened() is False)", flush=True)
@@ -149,7 +149,7 @@ def main():
                             motor_on(MOTOR_MIDDLE)
 
 
-                    print(zone)
+                    #print(zone)
 
                     cv2.putText(
                         annotated_frame,
