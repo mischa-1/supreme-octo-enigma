@@ -2,6 +2,9 @@ import cv2
 import torch
 from ultralytics import YOLO
 import platform
+from picamera2 import Picamera2
+import time
+
 
 IS_PI = platform.system() == "Linux"
 
@@ -13,6 +16,14 @@ MOTOR_LEFT = 22    # Vibration motor 3
 # lgpio globals (only valid on Pi)
 _lgpio = None
 _chip_handle = None
+
+picam2 = Picamera2()
+config = picam2.create_video_configuration(
+    main={"size": (640, 480), "format": "RGB888"}
+)
+picam2.configure(config)
+picam2.start()
+time.sleep(0.2)   # let camera warm up
 
 if IS_PI:
     import lgpio as _lgpio
@@ -70,23 +81,36 @@ def main():
 
     try:
         while True:
-            ret, frame = cap.read()
-            print("read ret:", ret, "frame_none:", frame is None, flush=True)
-            if not ret:
-                break
+            frame_rgb = picam2.capture_array()     # RGB numpy array
+            frame = frame_rgb[:, :, ::-1].copy()   # RGB → BGR for OpenCV
 
-            h, w, _ = frame.shape
-
+            # ---- YOLO + your existing logic ----
             results = model.track(
                 frame,
                 persist=True,
-                classes=[0],  # Only person tracking
+                classes=[0],
                 verbose=False
             )
 
-            print("Debug before annotated_frame")
             annotated_frame = frame.copy()
             motors_off()
+            #ret, frame = cap.read()
+            #print("read ret:", ret, "frame_none:", frame is None, flush=True)
+            #if not ret:
+            #    break
+            #
+            #h, w, _ = frame.shape
+
+            #results = model.track(
+            #    frame,
+            #    persist=True,
+            #    classes=[0],  # Only person tracking
+            #    verbose=False
+            #)
+
+            #print("Debug before annotated_frame")
+            #annotated_frame = frame.copy()
+            #motors_off()
 
             if results and results[0].boxes is not None:
                 print("Results if statement")
