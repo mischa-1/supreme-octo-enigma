@@ -114,7 +114,7 @@ def main():
             #motors_off()
 
             if results and results[0].boxes is not None:
-                print("Results if statement")
+                #print("Results if statement")
                 boxes = results[0].boxes.xyxy.cpu().numpy()
 
                 if len(boxes) > 0:
