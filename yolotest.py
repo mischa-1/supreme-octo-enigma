@@ -49,7 +49,8 @@ def main():
     model = YOLO("yolov8n.pt")
     model.to(device)
 
-    print("Debug 1")
+    #print("Debug 1")
+    print("Debug 1", flush=True)
     cap = cv2.VideoCapture(0)
     #gst = (
     #    "libcamerasrc ! "
@@ -57,10 +58,11 @@ def main():
     #    "videoconvert ! appsink drop=true sync=false"
     #)
     #cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
-    print("Debug 2")
+    #print("Debug 2")
+    print("Debug 2 - cap.isOpened():", cap.isOpened(), flush=True)
 
     if not cap.isOpened():
-        print("Camera error")
+        print("Camera error (cap.isOpened() is False)", flush=True)
         return
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
