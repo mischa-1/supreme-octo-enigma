@@ -110,6 +110,9 @@ def main():
                         if IS_PI:
                             motor_on(MOTOR_MIDDLE)
 
+
+                    print(zone)
+
                     cv2.putText(
                         annotated_frame,
                         f"ZONE: {zone}",
