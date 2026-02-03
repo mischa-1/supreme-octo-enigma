@@ -52,7 +52,7 @@ def main():
     #cap = cv2.VideoCapture(0)
     gst = (
         "libcamerasrc ! "
-        "video/x-raw,format=NV12,width=640,height=480,framerate=30/1 ! "
+        "video/x-raw,format=I420,width=640,height=480,framerate=30/1 ! "
         "videoconvert ! appsink drop=true sync=false"
     )
     cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
