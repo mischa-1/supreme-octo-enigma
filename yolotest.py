@@ -71,6 +71,7 @@ def main():
     try:
         while True:
             ret, frame = cap.read()
+            print("read ret:", ret, "frame_none:", frame is None, flush=True)
             if not ret:
                 break
 
