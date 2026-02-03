@@ -83,6 +83,7 @@ def main():
         while True:
             frame_rgb = picam2.capture_array()     # RGB numpy array
             frame = frame_rgb[:, :, ::-1].copy()   # RGB → BGR for OpenCV
+            h, w, c = frame_rgb.shape
 
             # ---- YOLO + your existing logic ----
             results = model.track(
