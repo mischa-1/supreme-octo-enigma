@@ -49,6 +49,7 @@ def main():
     model = YOLO("yolov8n.pt")
     model.to(device)
 
+    print("Debug 1")
     cap = cv2.VideoCapture(0)
     #gst = (
     #    "libcamerasrc ! "
@@ -56,6 +57,7 @@ def main():
     #    "videoconvert ! appsink drop=true sync=false"
     #)
     #cap = cv2.VideoCapture(gst, cv2.CAP_GSTREAMER)
+    print("Debug 2")
 
     if not cap.isOpened():
         print("Camera error")
@@ -79,10 +81,12 @@ def main():
                 verbose=False
             )
 
+            print("Debug before annotated_frame")
             annotated_frame = frame.copy()
             motors_off()
 
             if results and results[0].boxes is not None:
+                print("Results if statement")
                 boxes = results[0].boxes.xyxy.cpu().numpy()
 
                 if len(boxes) > 0:
