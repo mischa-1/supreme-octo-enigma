@@ -27,7 +27,7 @@ while(time.time() < startTime() + args.tim):
   lgpio.gpio_write(chip, TRIG, 1)
   time.sleep(0.00001)
   lgpio.gpio_write(chip, TRIG, 0)
-  while(!lgpio.gpio_read(chip, ECHO)):
+  while(not lgpio.gpio_read(chip, ECHO)):
     time1 = time.time()
   time1 = time.time()
   distance = convert(time1-time0)
