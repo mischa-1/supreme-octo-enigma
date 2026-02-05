@@ -17,6 +17,11 @@ LED_L = 5
 LED_M = 6
 LED_R = 13
 
+TRIG = 17
+ECHO = 27
+
+SENSOR_LED = 16
+
 
 # lgpio globals (only valid on Pi)
 _lgpio = None
@@ -30,6 +35,9 @@ picam2.configure(config)
 picam2.start()
 time.sleep(0.2)   # let camera warm up
 
+def convert(time):
+  return (time *34300)/2
+
 if IS_PI:
     import lgpio as _lgpio
 
@@ -41,6 +49,10 @@ if IS_PI:
     _lgpio.gpio_claim_output(_chip_handle, LED_R, 0)
     _lgpio.gpio_claim_output(_chip_handle, LED_M, 0)
     _lgpio.gpio_claim_output(_chip_handle, LED_L, 0)
+    _lgpio.gpio_claim_output(_chip_handle, SENSOR_LED, 0)
+    _lgpio.gpio_claim_output(_chip_handle, TRIG)
+    _lgpio.gpio_write(_chip_handle, TRIG, 0) 
+    _lgpio.gpio_claim_input(chip, ECHO)
 
     def motors_off():
         _lgpio.gpio_write(_chip_handle, LED_R, 0)
@@ -52,6 +64,21 @@ if IS_PI:
 
     def motor_off_single(pin: int):
         _lgpio.gpio_write(_chip_handle, pin, 0)
+
+    def ultrasonic():
+        _gpio.gpio_write(_chip_handle, TRIG, 1)
+        time.sleep(0.00001)
+        _lgpio.gpio_write(_chip_handle, TRIG, 0)
+        while(not lgpio.gpio_read(chip, ECHO)):
+            time0 = time.time()
+        while(lgpio.gpio_read(chip,ECHO)):
+            time1 = time.time()
+        distance = convert(time1-time0)
+        if distance < 20:
+            _lgpio.gpio_write(_chip_handle, SENSOR_LED, 1)
+        else:
+            _lgpio.gpio_write(_chip_handle, SENSOR_LED, 0)
+            
 
 else:
     def motors_off():
@@ -103,6 +130,8 @@ def main():
 
             annotated_frame = frame.copy()
             annotated_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+
+            ultrasonic()
             #motors_off()
             #ret, frame = cap.read()
             #print("read ret:", ret, "frame_none:", frame is None, flush=True)
