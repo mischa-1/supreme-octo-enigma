@@ -95,7 +95,7 @@ def main():
 
             annotated_frame = frame.copy()
             annotated_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-            motors_off()
+            #motors_off()
             #ret, frame = cap.read()
             #print("read ret:", ret, "frame_none:", frame is None, flush=True)
             #if not ret:
