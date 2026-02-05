@@ -50,6 +50,9 @@ if IS_PI:
     def motor_on(pin: int):
         _lgpio.gpio_write(_chip_handle, pin, 1)
 
+    def motor_off_single(pin: int):
+        _lgpio.gpio_write(_chip_handle, pin, 0)
+
 else:
     def motors_off():
         pass
@@ -143,16 +146,22 @@ def main():
                         zone = "RIGHT"
                         if IS_PI:
                             motor_on(LED_R)
+                            motor_off_single(LED_M)
+                            motor_off_single(LED_L)
 
                     elif cx < left_bound:
                         zone = "LEFT"
                         if IS_PI:
                             motor_on(LED_L)
+                            motor_off_single(LED_M)
+                            motor_off_single(LED_R)
 
                     else:
                         zone = "MIDDLE"
                         if IS_PI:
                             motor_on(LED_M)
+                            motor_off_single(LED_R)
+                            motor_off_single(LED_L)
 
 
                     #print(zone)
@@ -166,6 +175,8 @@ def main():
                         (255, 255, 255),
                         2
                     )
+            else:
+                motors_off()
 
             cv2.imshow("Person Direction Feedback", annotated_frame)
 
