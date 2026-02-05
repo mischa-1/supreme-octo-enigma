@@ -182,7 +182,10 @@ def main():
 
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
-
+                
+    except KeyboardInterrupt:
+        pass
+    
     finally:
         # Ensure we always shut things down cleanly
         cap.release()
