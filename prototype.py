@@ -175,8 +175,8 @@ def main():
                         (255, 255, 255),
                         2
                     )
-            else:
-                motors_off()
+                else:
+                    motors_off()
 
             cv2.imshow("Person Direction Feedback", annotated_frame)
 
