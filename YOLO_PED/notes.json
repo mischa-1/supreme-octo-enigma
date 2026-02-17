@@ -1,0 +1,21 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "ped_crosswalk"
+    },
+    {
+      "id": 1,
+      "name": "ped_stop"
+    },
+    {
+      "id": 2,
+      "name": "ped_walk"
+    }
+  ],
+  "info": {
+    "year": 2026,
+    "version": "1.0",
+    "contributor": "Label Studio"
+  }
+}

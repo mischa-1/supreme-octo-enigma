@@ -1,0 +1,3 @@
+ped_crosswalk
+ped_stop
+ped_walk

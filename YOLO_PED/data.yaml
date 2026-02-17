@@ -1,0 +1,9 @@
+path: /Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED
+
+train: images/train
+val: images/val
+
+names:
+  0: ped_crosswalk
+  1: ped_stop
+  2: ped_walk
