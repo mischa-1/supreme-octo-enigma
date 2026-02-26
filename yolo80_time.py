@@ -55,10 +55,12 @@ def main():
 
     try:
         while i < 100:
-            startTime = time.time()
+            
             frame_rgb = picam2.capture_array()     # RGB numpy array
             frame = frame_rgb[:, :, ::-1].copy()   # RGB → BGR for OpenCV
             h, w, c = frame_rgb.shape
+
+            startTime = time.time()
 
             # ---- YOLO + your existing logic ----
             results = model.track(
