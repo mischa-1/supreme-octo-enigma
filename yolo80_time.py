@@ -99,8 +99,7 @@ def main():
     finally:
         # Ensure we always shut things down cleanly
         cap.release()
-
-  [np.savetxt](https://numpy.org)('time_output.csv', times, delimiter=',')
+    np.savetxt('time_output.csv', times, delimiter=',')
 
 
 if __name__ == "__main__":
