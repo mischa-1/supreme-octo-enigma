@@ -6,6 +6,12 @@ from picamera2 import Picamera2
 import time
 import numpy as np
 import csv
+import argparse
+
+parse = argparse.ArgumentParser(description= "Date for this program")
+parse.add_argument("--model", action= "store", type=str, default="Error: YOLO mdoel must be specified", help = "time for loop")
+parse.add_argument("--output", action= "store", type=str, default="yolov8n.pt", help = "Name for CSV data file")
+args = parse.parse_args()
 
 IS_PI = platform.system() == "Linux"
 
@@ -23,7 +29,9 @@ def main():
     device = "cpu"
     #print(f"Using device: {device}")
 
-    model = YOLO("yolov8n.pt")
+    print("Using model:", args.model)
+
+    model = YOLO(args.model)
     model.to(device)
 
     picam2 = Picamera2()
@@ -97,7 +105,12 @@ def main():
         picam2.stop()
         # Ensure we always shut things down cleanly
         #cap.release()
-    np.savetxt('time_output.csv', times, delimiter=',')
+
+    filename = args.output
+    if not filename.lower().endswith(".csv"):
+        filename += ".csv"
+    
+    np.savetxt(filename, times, delimiter=',')
 
 
 if __name__ == "__main__":
