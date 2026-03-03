@@ -7,6 +7,7 @@ import time
 import numpy as np
 import csv
 import argparse
+from pathlib import Path
 
 parse = argparse.ArgumentParser(description= "Date for this program")
 parse.add_argument("--model", action= "store", type=str, default="Error: YOLO mdoel must be specified", help = "time for loop")
@@ -109,8 +110,13 @@ def main():
     filename = args.output
     if not filename.lower().endswith(".csv"):
         filename += ".csv"
+
+    output_dir = Path("time_data")
+    output_dir.mkdir(exist_ok=True)
+
+    file_path = output_dir / filename
     
-    np.savetxt(filename, times, delimiter=',')
+    np.savetxt(file_path, times, delimiter=',')
 
 
 if __name__ == "__main__":
