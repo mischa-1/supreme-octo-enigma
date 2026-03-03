@@ -66,10 +66,8 @@ def main():
             startTime = time.time()
 
             # ---- YOLO + your existing logic ----
-            results = model.track(
+            results = model.predict(
                 frame,
-                persist=True,
-                classes=[0],
                 verbose=False
             )
 
