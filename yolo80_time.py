@@ -13,30 +13,31 @@ IS_PI = platform.system() == "Linux"
 _lgpio = None
 _chip_handle = None
 
-picam2 = Picamera2()
-config = picam2.create_video_configuration(
-    main={"size": (640, 480), "format": "RGB888"}
-)
-picam2.configure(config)
-picam2.start()
-time.sleep(0.2)   # let camera warm up
 
-times = np.empty(100)
-i = 0
-
-
+N = 100
 
 
 def main():
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
+    
+    #device = "mps" if torch.backends.mps.is_available() else "cpu"
+    device = "cpu"
     #print(f"Using device: {device}")
 
     model = YOLO("yolov8n.pt")
     model.to(device)
 
+    picam2 = Picamera2()
+    config = picam2.create_video_configuration(
+        main={"size": (640, 480), "format": "RGB888"}
+    )
+
+    picam2.configure(config)
+    picam2.start()
+    time.sleep(0.2)   # let camera warm up
     #print("Debug 1")
     #print("Debug 1", flush=True)
-    cap = cv2.VideoCapture(0)
+    times = np.empty(N, dtype=np.float64)
+    # cap = cv2.VideoCapture(0)
     #gst = (
     #    "libcamerasrc ! "
     #    "video/x-raw,format=I420,width=640,height=480,framerate=30/1 ! "
@@ -46,19 +47,19 @@ def main():
     #print("Debug 2")
     #print("Debug 2 - cap.isOpened():", cap.isOpened(), flush=True)
 
-    if not cap.isOpened():
-        print("Camera error (cap.isOpened() is False)", flush=True)
-        return
+    #if not cap.isOpened():
+    #    print("Camera error (cap.isOpened() is False)", flush=True)
+    #    return
 
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+    #cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
     try:
-        while i < 100:
+        for i in range(N)
             
             frame_rgb = picam2.capture_array()     # RGB numpy array
             frame = frame_rgb[:, :, ::-1].copy()   # RGB → BGR for OpenCV
-            h, w, c = frame_rgb.shape
+            #h, w, c = frame_rgb.shape
 
             startTime = time.time()
 
@@ -91,14 +92,11 @@ def main():
             #annotated_frame = frame.copy()
             #motors_off()
             times[i] = time.time() - startTime;
-            
-            i += 1
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
 
     finally:
+        picam2.stop()
         # Ensure we always shut things down cleanly
-        cap.release()
+        #cap.release()
     np.savetxt('time_output.csv', times, delimiter=',')
 
 
