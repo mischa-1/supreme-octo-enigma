@@ -4,7 +4,7 @@ from ultralytics import YOLO
 import platform
 from picamera2 import Picamera2
 import time
-import numpy as py
+import numpy as np
 import csv
 
 IS_PI = platform.system() == "Linux"
@@ -32,6 +32,8 @@ def main():
     )
 
     picam2.configure(config)
+    from libcamera import controls
+    picam2.set_controls({"AfMode": controls.AfModeEnum.Manual})
     picam2.start()
     time.sleep(0.2)   # let camera warm up
     #print("Debug 1")
@@ -55,7 +57,7 @@ def main():
     #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
     try:
-        for i in range(N)
+        for i in range(N):
             
             frame_rgb = picam2.capture_array()     # RGB numpy array
             frame = frame_rgb[:, :, ::-1].copy()   # RGB → BGR for OpenCV
