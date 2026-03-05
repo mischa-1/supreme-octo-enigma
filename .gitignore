@@ -18,3 +18,4 @@ __pycache__/
 *.hef
 *.csv
 time_data/
+!time_data/80and3_quantized_*.csv
