@@ -52,10 +52,10 @@ def main():
         # Start with FLOAT32 streams (easiest). If you want max speed later,
         # switch to quantized=True and handle dequantization.
         in_params = hpf.InputVStreamParams.make_from_network_group(
-            network_group, quantized=False, format_type=hpf.FormatType.FLOAT32
+            network_group, quantized=True, format_type=hpf.FormatType.UINT8
         )
         out_params = hpf.OutputVStreamParams.make_from_network_group(
-            network_group, quantized=False, format_type=hpf.FormatType.FLOAT32
+            network_group, quantized=True, format_type=hpf.FormatType.UINT8
         )
 
         in_h, in_w, in_c = in_info.shape  # typically H,W,C
@@ -87,10 +87,7 @@ def main():
 
                         # Convert to float32. Many pipelines use [0,1]. If your results look wrong later,
                         # try removing "/ 255.0" (some HEFs expect 0..255 float).
-                        inp = resized.astype(np.float32) / 255.0
-
-                        # Batch dimension [1,H,W,C]
-                        input_data = {in_info.name: np.expand_dims(inp, axis=0)}
+                        input_data = {in_info.name: np.expand_dims(resized, axis=0)}  # uint8
 
                         t0 = time.perf_counter()
                         outputs = pipe.infer(input_data)
