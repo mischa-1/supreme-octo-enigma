@@ -35,7 +35,8 @@ def main():
     #device = "mps" if torch.backends.mps.is_available() else "cpu"
     
     dev = "cpu"
-
+    
+    model_path_lower = args.model.lower()
     is_exported = model_path_lower.endswith((".onnx", ".engine", ".tflite", ".openvino", ".mlpackage"))
 
     
