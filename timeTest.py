@@ -10,7 +10,12 @@ import argparse
 from pathlib import Path
 
 parse = argparse.ArgumentParser(description= "Date for this program")
-parse.add_argument("--model", action= "store", type=str, default="Error: YOLO mdoel must be specified", help = "time for loop")
+parse.add_argument(
+    "--model",
+    type=str,
+    required=True,
+    help="Path to YOLO model (.pt or .onnx)"
+)
 parse.add_argument("--output", action= "store", type=str, default="yolov8n.pt", help = "Name for CSV data file")
 args = parse.parse_args()
 
@@ -27,13 +32,17 @@ N = 100
 def main():
     
     #device = "mps" if torch.backends.mps.is_available() else "cpu"
-    device = "cpu"
-    #print(f"Using device: {device}")
-
+    
+    dev = "cpu"
     print("Using model:", args.model)
 
-    model = YOLO(args.model)
-    model.to(device)
+    model_path_lower = args.model.lower()
+    is_exported = model_path_lower.endswith((".onnx", ".engine", ".tflite", ".openvino", ".mlpackage"))
+
+    model = YOLO(args.model, task="detect")
+
+    if (not is_exported) and model_path_lower.endswith(".pt"):
+        model.to(dev)
 
     picam2 = Picamera2()
     config = picam2.create_video_configuration(
@@ -77,6 +86,7 @@ def main():
             # ---- YOLO + your existing logic ----
             results = model.predict(
                 frame,
+                device = dev,
                 verbose=False
             )
 
