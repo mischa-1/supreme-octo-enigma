@@ -16,7 +16,7 @@ parse.add_argument(
     required=True,
     help="Path to YOLO model (.pt or .onnx)"
 )
-parser.add_argument("--model2", required=True, help="Second model weights path (.pt/.onnx/etc)")
+parse.add_argument("--model2", required=True, help="Second model weights path (.pt/.onnx/etc)")
 parse.add_argument("--output", action= "store", type=str, default="yolov8n.pt", help = "Name for CSV data file")
 args = parse.parse_args()
 
