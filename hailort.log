@@ -170,3 +170,148 @@
 [2026-03-05 12:35:12.079] [1999] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1yolo/input_layer1 has 0 frames in his Queue on destruction
 [2026-03-05 12:35:12.079] [1999] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.61661 ms
 [2026-03-05 12:35:12.079] [1999] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.62624 ms
+[2026-03-05 12:45:13.667] [2813] [HailoRT] [info] [vdevice.cpp:535] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: NONE, multi_process_service: false
+[2026-03-05 12:45:13.679] [2813] [HailoRT] [info] [device.cpp:51] [Device] OS Version: Linux 6.12.62+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.62-1+rpt1~bookworm (2026-01-19) aarch64
+[2026-03-05 12:45:13.679] [2813] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
+[2026-03-05 12:45:13.679] [2813] [HailoRT] [info] [vdevice.cpp:682] [create] VDevice Infos: 0001:01:00.0
+[2026-03-05 12:45:13.687] [2813] [HailoRT] [info] [internal_buffer_manager.cpp:77] [print_execution_results] Planned internal buffer memory: CMA=0 CMA-Desc=1048576 Pinned=2358784. memory to edge layer usage factor is 0.6809045
+[2026-03-05 12:45:13.687] [2813] [HailoRT] [info] [internal_buffer_manager.cpp:86] [print_execution_results] Default Internal buffer planner executed successfully
+[2026-03-05 12:45:13.712] [2813] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 33.048652 milliseconds
+[2026-03-05 12:45:13.712] [2813] [HailoRT] [info] [vdevice.cpp:780] [configure] Configuring HEF on VDevice took 33.382393 milliseconds
+[2026-03-05 12:45:13.712] [2813] [HailoRT] [info] [hef.cpp:1994] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: best
+[2026-03-05 12:45:13.712] [2813] [HailoRT] [info] [hef.cpp:1994] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: best
+[2026-03-05 12:45:14.024] [2813] [HailoRT] [info] [core_op.cpp:156] [activate] Activating best took 0.531112 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-03-05 12:45:14.024] [2813] [HailoRT] [info] [core_op.cpp:156] [activate] Activating best took 0.555093 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl3best/input_layer1 | hw_frame_size: 1228800)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl3best/input_layer1 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl3best/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating best/input_layer1...
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'best/input_layer1': (PreInferEl3best/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl3best/input_layer1 | timeout: 10s) >> (HwWriteEl3best/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl12best/conv61 | hw_frame_size: 25600)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl12best/conv61 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating best/conv61...
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'best/conv61': HW >> (HwReadEl12best/conv61 | hw_frame_size: 25600) >> (UserBuffQEl12best/conv61 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl6best/conv64 | hw_frame_size: 19200)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl6best/conv64 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating best/conv64...
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'best/conv64': HW >> (HwReadEl6best/conv64 | hw_frame_size: 19200) >> (UserBuffQEl6best/conv64 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0best/conv77 | hw_frame_size: 6400)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0best/conv77 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating best/conv77...
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'best/conv77': HW >> (HwReadEl0best/conv77 | hw_frame_size: 6400) >> (UserBuffQEl0best/conv77 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl1best/conv80 | hw_frame_size: 4800)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl1best/conv80 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating best/conv80...
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'best/conv80': HW >> (HwReadEl1best/conv80 | hw_frame_size: 4800) >> (UserBuffQEl1best/conv80 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl7best/conv91 | hw_frame_size: 3200)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read7best/conv91)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl7best/conv91 | Reorder - src_order: FCR, src_shape: (20, 20, 8), dst_order: FCR, dst_shape: (20, 20, 4))
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl7best/conv91 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating best/conv91...
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'best/conv91': HW >> (HwReadEl7best/conv91 | hw_frame_size: 3200) >> (PullQEl_hw_read7best/conv91) >> (PostInferEl7best/conv91 | Reorder - src_order: FCR, src_shape: (20, 20, 8), dst_order: FCR, dst_shape: (20, 20, 4)) >> (UserBuffQEl7best/conv91 | timeout: 10s)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl1best/conv94 | hw_frame_size: 3200)
+[2026-03-05 12:45:14.025] [2813] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read1best/conv94)
+[2026-03-05 12:45:14.026] [2813] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl1best/conv94 | Reorder - src_order: FCR, src_shape: (20, 20, 8), dst_order: FCR, dst_shape: (20, 20, 3))
+[2026-03-05 12:45:14.026] [2813] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl1best/conv94 | timeout: 10s)
+[2026-03-05 12:45:14.026] [2813] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating best/conv94...
+[2026-03-05 12:45:14.026] [2813] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'best/conv94': HW >> (HwReadEl1best/conv94 | hw_frame_size: 3200) >> (PullQEl_hw_read1best/conv94) >> (PostInferEl1best/conv94 | Reorder - src_order: FCR, src_shape: (20, 20, 8), dst_order: FCR, dst_shape: (20, 20, 3)) >> (UserBuffQEl1best/conv94 | timeout: 10s)
+[2026-03-05 12:45:17.506] [2838] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl12best/conv61!
+[2026-03-05 12:45:17.506] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl12best/conv61 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.506] [2839] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl6best/conv64!
+[2026-03-05 12:45:17.506] [2839] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl6best/conv64 is not running anymore, exiting..
+[2026-03-05 12:45:17.506] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl6best/conv64 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.506] [2840] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0best/conv77!
+[2026-03-05 12:45:17.506] [2840] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0best/conv77 is not running anymore, exiting..
+[2026-03-05 12:45:17.506] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0best/conv77 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.506] [2841] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl1best/conv80!
+[2026-03-05 12:45:17.506] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl1best/conv80 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.506] [2842] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-03-05 12:45:17.506] [2842] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-03-05 12:45:17.506] [2843] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl7best/conv91!
+[2026-03-05 12:45:17.506] [2842] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read7best/conv91 was aborted!
+[2026-03-05 12:45:17.506] [2842] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read7best/conv91 is not running anymore, exiting..
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read7best/conv91 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.507] [2843] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl7best/conv91 is not running anymore, exiting..
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl7best/conv91 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.507] [2844] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-03-05 12:45:17.507] [2844] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-03-05 12:45:17.507] [2844] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read1best/conv94 was aborted!
+[2026-03-05 12:45:17.507] [2845] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl1best/conv94!
+[2026-03-05 12:45:17.507] [2844] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read1best/conv94 is not running anymore, exiting..
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read1best/conv94 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.507] [2845] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl1best/conv94 is not running anymore, exiting..
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl1best/conv94 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.507] [2837] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl3best/input_layer1 is not running anymore, exiting..
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl3best/input_layer1 has 0 frames in his Queue on destruction
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.654019 ms
+[2026-03-05 12:45:17.507] [2813] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.663167 ms
+[2026-03-05 12:46:09.543] [3554] [HailoRT] [info] [vdevice.cpp:535] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: NONE, multi_process_service: false
+[2026-03-05 12:46:09.555] [3554] [HailoRT] [info] [device.cpp:51] [Device] OS Version: Linux 6.12.62+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.62-1+rpt1~bookworm (2026-01-19) aarch64
+[2026-03-05 12:46:09.555] [3554] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
+[2026-03-05 12:46:09.555] [3554] [HailoRT] [info] [vdevice.cpp:682] [create] VDevice Infos: 0001:01:00.0
+[2026-03-05 12:46:09.563] [3554] [HailoRT] [info] [internal_buffer_manager.cpp:77] [print_execution_results] Planned internal buffer memory: CMA=0 CMA-Desc=1048576 Pinned=2359296. memory to edge layer usage factor is 0.7182045
+[2026-03-05 12:46:09.563] [3554] [HailoRT] [info] [internal_buffer_manager.cpp:86] [print_execution_results] Default Internal buffer planner executed successfully
+[2026-03-05 12:46:09.589] [3554] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 33.478648 milliseconds
+[2026-03-05 12:46:09.589] [3554] [HailoRT] [info] [vdevice.cpp:780] [configure] Configuring HEF on VDevice took 33.785444 milliseconds
+[2026-03-05 12:46:09.589] [3554] [HailoRT] [info] [hef.cpp:1994] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: yolo
+[2026-03-05 12:46:09.589] [3554] [HailoRT] [info] [hef.cpp:1994] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: yolo
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolo took 0.691001 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [core_op.cpp:156] [activate] Activating yolo took 0.712241 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1yolo/input_layer1 | hw_frame_size: 1228800)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1yolo/input_layer1 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1yolo/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating yolo/input_layer1...
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'yolo/input_layer1': (PreInferEl1yolo/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1yolo/input_layer1 | timeout: 10s) >> (HwWriteEl1yolo/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl6yolo/conv61 | hw_frame_size: 25600)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl6yolo/conv61 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolo/conv61...
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'yolo/conv61': HW >> (HwReadEl6yolo/conv61 | hw_frame_size: 25600) >> (UserBuffQEl6yolo/conv61 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl13yolo/conv64 | hw_frame_size: 512000)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl13yolo/conv64 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolo/conv64...
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'yolo/conv64': HW >> (HwReadEl13yolo/conv64 | hw_frame_size: 512000) >> (UserBuffQEl13yolo/conv64 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0yolo/conv77 | hw_frame_size: 6400)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0yolo/conv77 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolo/conv77...
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'yolo/conv77': HW >> (HwReadEl0yolo/conv77 | hw_frame_size: 6400) >> (UserBuffQEl0yolo/conv77 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0yolo/conv80 | hw_frame_size: 128000)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0yolo/conv80 | timeout: 10s)
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolo/conv80...
+[2026-03-05 12:46:09.902] [3554] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'yolo/conv80': HW >> (HwReadEl0yolo/conv80 | hw_frame_size: 128000) >> (UserBuffQEl0yolo/conv80 | timeout: 10s)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl1yolo/conv91 | hw_frame_size: 3200)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read1yolo/conv91)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl1yolo/conv91 | Reorder - src_order: FCR, src_shape: (20, 20, 8), dst_order: FCR, dst_shape: (20, 20, 4))
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl1yolo/conv91 | timeout: 10s)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolo/conv91...
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'yolo/conv91': HW >> (HwReadEl1yolo/conv91 | hw_frame_size: 3200) >> (PullQEl_hw_read1yolo/conv91) >> (PostInferEl1yolo/conv91 | Reorder - src_order: FCR, src_shape: (20, 20, 8), dst_order: FCR, dst_shape: (20, 20, 4)) >> (UserBuffQEl1yolo/conv91 | timeout: 10s)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl3yolo/conv94 | hw_frame_size: 32000)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl3yolo/conv94 | timeout: 10s)
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating yolo/conv94...
+[2026-03-05 12:46:09.903] [3554] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'yolo/conv94': HW >> (HwReadEl3yolo/conv94 | hw_frame_size: 32000) >> (UserBuffQEl3yolo/conv94 | timeout: 10s)
+[2026-03-05 12:46:13.383] [3578] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl6yolo/conv61!
+[2026-03-05 12:46:13.383] [3578] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl6yolo/conv61 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl6yolo/conv61 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3579] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl13yolo/conv64!
+[2026-03-05 12:46:13.384] [3579] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl13yolo/conv64 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl13yolo/conv64 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3580] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0yolo/conv77!
+[2026-03-05 12:46:13.384] [3580] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0yolo/conv77 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0yolo/conv77 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3581] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0yolo/conv80!
+[2026-03-05 12:46:13.384] [3581] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0yolo/conv80 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0yolo/conv80 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3583] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl1yolo/conv91!
+[2026-03-05 12:46:13.384] [3582] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-03-05 12:46:13.384] [3582] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-03-05 12:46:13.384] [3582] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read1yolo/conv91 was aborted!
+[2026-03-05 12:46:13.384] [3582] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read1yolo/conv91 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read1yolo/conv91 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3583] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl1yolo/conv91 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl1yolo/conv91 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3584] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl3yolo/conv94!
+[2026-03-05 12:46:13.384] [3584] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl3yolo/conv94 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl3yolo/conv94 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.384] [3577] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1yolo/input_layer1 is not running anymore, exiting..
+[2026-03-05 12:46:13.384] [3554] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1yolo/input_layer1 has 0 frames in his Queue on destruction
+[2026-03-05 12:46:13.385] [3554] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.623371 ms
+[2026-03-05 12:46:13.385] [3554] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.632593 ms
