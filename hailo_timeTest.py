@@ -14,11 +14,13 @@ N_DEFAULT = 100
 
 def main():
     parser = argparse.ArgumentParser(description="Timing test: Picamera2 -> Hailo AI HAT+ (.hef)")
-    parser.add_argument("--hef", required=True, type=str, help="Path to .hef model file")
+    parse.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="Path to YOLO model (.pt or .onnx)"
+    )
     parser.add_argument("--output", default="hailo_time_output", type=str, help="CSV output name (with/without .csv)")
-    parser.add_argument("--n", default=N_DEFAULT, type=int, help="Number of frames to time")
-    parser.add_argument("--cam_w", default=640, type=int)
-    parser.add_argument("--cam_h", default=480, type=int)
     args = parser.parse_args()
 
     # Output file handling (same style you like)
@@ -30,7 +32,8 @@ def main():
     file_path = output_dir / filename
 
     # ---- Load HEF + configure Hailo device ----
-    hef = hpf.HEF(args.hef)
+    model_path = Path("models") / args.model
+    hef = hpf.HEF(model_path)
 
     with hpf.VDevice() as vdevice:
         cfg = hpf.ConfigureParams.create_from_hef(
