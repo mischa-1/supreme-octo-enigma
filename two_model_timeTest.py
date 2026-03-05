@@ -142,9 +142,9 @@ def main():
     output_dir = Path("time_data")
     output_dir.mkdir(exist_ok=True)
   
-    out1 = os.path.join(outpit_dir, args.output + "_model1.csv")
-    out2 = os.path.join(outpit_dir, args.output + "_model2.csv")
-    outt = os.path.join(outpit_dir, args.output + "_total.csv")
+    out1 = os.path.join(output_dir, args.output + "_model1.csv")
+    out2 = os.path.join(output_dir, args.output + "_model2.csv")
+    outt = os.path.join(output_dir, args.output + "_total.csv")
 
     with open(out1, "w", newline="") as f:
         w = csv.writer(f)
