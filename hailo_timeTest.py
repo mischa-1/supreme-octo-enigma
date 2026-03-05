@@ -14,7 +14,7 @@ N_DEFAULT = 100
 
 def main():
     parser = argparse.ArgumentParser(description="Timing test: Picamera2 -> Hailo AI HAT+ (.hef)")
-    parse.add_argument(
+    parser.add_argument(
         "--model",
         type=str,
         required=True,
@@ -33,7 +33,7 @@ def main():
 
     # ---- Load HEF + configure Hailo device ----
     model_path = Path("models") / args.model
-    hef = hpf.HEF(model_path)
+    hef = hpf.HEF(str(model_path))
 
     with hpf.VDevice() as vdevice:
         cfg = hpf.ConfigureParams.create_from_hef(

@@ -7,3 +7,13 @@
 [2026-03-04 20:34:49.336] [2697] [HailoRT] [info] [device.cpp:51] [Device] OS Version: Linux 6.12.62+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.62-1+rpt1~bookworm (2026-01-19) aarch64
 [2026-03-04 20:34:49.337] [2697] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
 [2026-03-04 20:34:49.337] [2697] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
+[2026-03-05 11:54:08.282] [2033] [HailoRT] [info] [vdevice.cpp:535] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: NONE, multi_process_service: false
+[2026-03-05 11:54:08.300] [2033] [HailoRT] [info] [device.cpp:51] [Device] OS Version: Linux 6.12.62+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.62-1+rpt1~bookworm (2026-01-19) aarch64
+[2026-03-05 11:54:08.300] [2033] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
+[2026-03-05 11:54:08.300] [2033] [HailoRT] [info] [vdevice.cpp:682] [create] VDevice Infos: 0001:01:00.0
+[2026-03-05 11:54:08.300] [2033] [HailoRT] [error] [device_internal.cpp:602] [check_hef_is_compatible] HEF format is not compatible with device. Device arch: HAILO8L, HEF arch: HAILO8
+[2026-03-05 11:54:08.304] [2033] [HailoRT] [error] [vdevice.cpp:892] [create_local_config_params] CHECK_SUCCESS failed with status=HAILO_HEF_NOT_COMPATIBLE_WITH_DEVICE(93)
+[2026-03-05 11:54:08.304] [2033] [HailoRT] [error] [vdevice.cpp:724] [configure] CHECK_SUCCESS failed with status=HAILO_HEF_NOT_COMPATIBLE_WITH_DEVICE(93)
+[2026-03-05 11:55:06.367] [2049] [HailoRT] [info] [device.cpp:51] [Device] OS Version: Linux 6.12.62+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.62-1+rpt1~bookworm (2026-01-19) aarch64
+[2026-03-05 11:55:06.367] [2049] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
+[2026-03-05 11:55:06.367] [2049] [HailoRT] [info] [control.cpp:113] [control__parse_identify_results] firmware_version is: 4.23.0
