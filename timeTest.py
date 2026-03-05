@@ -39,7 +39,10 @@ def main():
     model_path_lower = args.model.lower()
     is_exported = model_path_lower.endswith((".onnx", ".engine", ".tflite", ".openvino", ".mlpackage"))
 
-    model = YOLO(args.model, task="detect")
+
+    model_path = Path("models") / args.model
+    model = YOLO(model_path, task="detect")
+
 
     if (not is_exported) and model_path_lower.endswith(".pt"):
         model.to(dev)
