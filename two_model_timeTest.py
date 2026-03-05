@@ -89,6 +89,8 @@ def main():
 
     try:
         for _ in range(3):
+            frame_rgb = picam2.capture_array()     # RGB numpy array
+            frame = frame_rgb[:, :, ::-1].copy()
             _ = model1.predict(source=frame, verbose=False)
             _ = model2.predict(source=frame, verbose=False)
         for i in range(N):
