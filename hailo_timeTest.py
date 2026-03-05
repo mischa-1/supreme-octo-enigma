@@ -21,6 +21,9 @@ def main():
         help="Path to YOLO model (.pt or .onnx)"
     )
     parser.add_argument("--output", default="hailo_time_output", type=str, help="CSV output name (with/without .csv)")
+    parser.add_argument("--cam_w", type=int, default=640, help="Camera width (pixels)")
+    parser.add_argument("--cam_h", type=int, default=480, help="Camera height (pixels)")
+    parser.add_argument("--n", type=int, default=100, help="Number of frames to run inference on")
     args = parser.parse_args()
 
     # Output file handling (same style you like)
@@ -56,7 +59,7 @@ def main():
         )
 
         in_h, in_w, in_c = in_info.shape  # typically H,W,C
-        print(f"Using HEF: {args.hef}")
+        #print(f"Using HEF: {args.hef}")
         print(f"HEF input: {in_info.name} shape={in_info.shape}")
         print("HEF outputs:")
         for oi in out_infos:
