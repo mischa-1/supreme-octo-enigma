@@ -5,9 +5,9 @@ import time
 HOST = "0.0.0.0"
 PORT = 5000
 
-LEFT_PIN = 21    
-CENTER_PIN = 18
-RIGHT_PIN = 27
+LEFT_PIN = 5  
+CENTER_PIN = 6
+RIGHT_PIN = 26
 
 # open gpio
 h = lgpio.gpiochip_open(0)
