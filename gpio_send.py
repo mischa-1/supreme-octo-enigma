@@ -1,7 +1,7 @@
 import socket
 import time
 
-HOST = "INSERT PI 0 IP"  # Pi Zero IP
+HOST = "172.27.61.223 "  # Pi Zero IP
 PORT = 5000
 
 def send(cmd):
