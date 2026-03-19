@@ -27,7 +27,10 @@ server.listen()
 
 print("Waiting for signal...")
 
-while True:
+startTime = time.time()
+currTime = time.time()
+
+while currTime - startTime < 10:
     conn, addr = server.accept()
     data = conn.recv(1024).decode()
 
@@ -43,3 +46,4 @@ while True:
         pulse(RIGHT_PIN)
 
     conn.close()
+    currTime = time.time()
