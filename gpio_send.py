@@ -1,4 +1,5 @@
 import socket
+import time
 
 HOST = "INSERT PI 0 IP"  # Pi Zero IP
 PORT = 5000
@@ -9,4 +10,6 @@ def send(cmd):
     s.send(cmd.encode())
     s.close()
 
-send("LEFT")
+for i in range(5)
+    send("LEFT")
+    time.sleep(0.4)
