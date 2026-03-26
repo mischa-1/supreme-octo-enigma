@@ -54,7 +54,7 @@ class TextToSpeech:
             subprocess.run(['say', text], check=True)
         else:
             # Fallback to pyttsx3 for other platforms
-             from gtts import gTTS
+            from gtts import gTTS
             from playsound import playsound
             import os
 
