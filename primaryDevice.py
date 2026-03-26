@@ -190,6 +190,39 @@ def main():
     else:
         print("No detection")
 
+    # ===== YOLO Detection Loop =====
+    try:
+        while True:
+            # --- Run YOLO ---
+            detected, class_id = run_YOLO(
+                picam2,
+                network_group,
+                ng_params,
+                in_params,
+                out_params,
+                in_info
+            )
+    
+            # --- Handle Result ---
+            if not detected:
+                print("No detection")
+            else:
+                print(f"Detected class {class_id}")
+    
+                if not args.silent:
+                    tts.speak(f"Hazard detected class {class_id}")
+                    time.sleep(2.5)
+    
+    except KeyboardInterrupt:
+        print("\nStopping detection...")
+    
+    finally:
+        # Optional cleanup
+        try:
+            tts.cleanup()
+        except:
+            pass
+
     ## Debugging
     if args.TTS:
         hazards = [
