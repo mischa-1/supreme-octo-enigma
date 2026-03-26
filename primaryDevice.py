@@ -107,18 +107,30 @@ def run_YOLO(
 
     # Get first output tensor
     dets = np.asarray(outputs[list(outputs.keys())[0]])
+    print("Raw detection shape:", dets.shape)
 
-    # Remove batch dim if present
-    if dets.ndim == 3 and dets.shape[0] == 1:
-        dets = dets[0]
+    # Remove dimensions of size 1
+    dets = np.squeeze(dets)
+    print("Squeezed detection shape:", dets.shape)
 
     hazards = set()
 
+    # No detections
+    if dets.size == 0:
+        return []
+
+    # If exactly one detection, make it 2D so the loop still works
+    if dets.ndim == 1:
+        dets = dets.reshape(1, -1)
+
     for det in dets:
-        if len(det) < 6:
+        det = np.asarray(det).flatten()
+        print("det:", det)
+
+        if det.size < 6:
             continue
 
-        score = det[4]
+        score = float(det[4])
         class_id = int(det[5])
 
         if score >= score_thresh:
