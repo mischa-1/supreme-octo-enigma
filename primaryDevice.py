@@ -19,7 +19,7 @@ from gtts import gTTS
 # airpod address
 
 # ---- CURRENT MODEL ----
-MODEL_NAME = "best.hef"
+MODEL_NAME = "yolo26n-1.hef"
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description= "Date for this program")
