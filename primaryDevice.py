@@ -40,37 +40,27 @@ def parse_arguments():
 # This code came from Tasha earlier in the semester
 
 class TextToSpeech:
-    def __init__(self, rate=160, volume=1.0):
-        self.is_mac = platform.system() == "Darwin"
-        self.rate = rate
-        self.volume = volume
+    def __init__(self):
+        self.player_proc = None
 
     def speak(self, text: str):
         if not text:
             return
 
-        if self.is_mac:
-            # Use macOS native 'say' command
-            subprocess.run(['say', text], check=True)
-        else:
-            # Fallback to pyttsx3 for other platforms
-            from gtts import gTTS
-            from playsound import playsound
-            import os
+        filename = "tts_output.mp3"
 
-            filename = "tts_output.mp3"
+        # generate mp3 here
+        # tts = gTTS(text=text)
+        # tts.save(filename)
 
-            tts = gTTS(text=text, lang="en")
-            tts.save(filename)
+        if self.player_proc and self.player_proc.poll() is None:
+            self.player_proc.terminate()
 
-            playsound(filename)
-
-            # Optional: delete file after playing
-            os.remove(filename)
+        self.player_proc = subprocess.Popen(["mpg123", "-q", filename])
 
     def cleanup(self):
-        """No cleanup needed for native say command"""
-        pass
+        if self.player_proc and self.player_proc.poll() is None:
+            self.player_proc.terminate()
 
 
 ##### Talk to Pi ** check with Rachel
