@@ -12,7 +12,7 @@ import subprocess
 import platform
 
 from gtts import gTTS
-from playsound import playsound
+#from playsound import playsound
 
 ##### Create arpsgarse (debug mode)
 # debug mode
@@ -68,29 +68,22 @@ class TextToSpeech:
 
 ##### main
 def main():
-
-    # Setting things up
     args = parse_arguments()
     tts = TextToSpeech()
 
     if args.TTS:
-
-        # This is gonna be debug text to speech thing
-        tts = TextToSpeech()
-    
         hazards = [
             "Person approaching from the right",
             "Obstacle directly ahead",
             "Clear path",
             "No hazards detected"
         ]
-    
+
         for hazard in hazards:
             print(f"TTS Output: {hazard}")
             tts.speak(hazard)
-            time.sleep(0.3)
+            time.sleep(2.5)  # give each phrase time to play
 
-    # Cleaning things up SAFELY
     tts.cleanup()
 
 
