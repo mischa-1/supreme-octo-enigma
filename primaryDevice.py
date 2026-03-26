@@ -40,27 +40,30 @@ def parse_arguments():
 # This code came from Tasha earlier in the semester
 
 class TextToSpeech:
-    def __init__(self):
+    def __init__(self, filename="tts_output.mp3"):
         self.player_proc = None
+        self.filename = filename
 
     def speak(self, text: str):
         if not text:
             return
 
-        filename = "tts_output.mp3"
-
-        # generate mp3 here
-        # tts = gTTS(text=text)
-        # tts.save(filename)
-
+        # Stop previous playback if it is still running
         if self.player_proc and self.player_proc.poll() is None:
             self.player_proc.terminate()
+            self.player_proc.wait()
 
-        self.player_proc = subprocess.Popen(["mpg123", "-q", filename])
+        # Generate fresh mp3 from text
+        tts = gTTS(text=text)
+        tts.save(self.filename)
+
+        # Play mp3 without blocking the rest of the program
+        self.player_proc = subprocess.Popen(["mpg123", "-q", self.filename])
 
     def cleanup(self):
         if self.player_proc and self.player_proc.poll() is None:
             self.player_proc.terminate()
+            self.player_proc.wait()
 
 
 ##### Talk to Pi ** check with Rachel
