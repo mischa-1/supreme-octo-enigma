@@ -24,7 +24,13 @@ def parse_arguments():
 
 ##### Run TOFL *** check with Rachel
 
+#### AI HAT Set up
+def hailo_set_up():
+    
+
 ##### Run YOLO
+
+    
 
 ##### Airpod warning
 # This code came from Tasha earlier in the semester
