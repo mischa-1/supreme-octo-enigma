@@ -17,6 +17,10 @@ from gtts import gTTS
 ##### Create arpsgarse (debug mode)
 # debug mode
 # airpod address
+
+# ---- CURRENT MODEL ----
+MODEL_NAME = "yolov8n.hef"
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description= "Date for this program")
     parser.add_argument(
@@ -24,13 +28,57 @@ def parse_arguments():
             action="store_true",
             help="Test that TTS is working on the Pi with basic example"
         )
+    parser.add_argument(
+            "--silent",
+            action="store_true",
+            help="Run code in silent mode for debugging purpouses"
+        )
     return parser.parse_args()
 
 ##### Run TOFL *** check with Rachel
 
+##### Camera Set Up
+def setup_camera(in_w, in_h):
+    """Start camera at model input size."""
+    picam2 = Picamera2()
+
+    config = picam2.create_video_configuration(
+        main={"size": (in_w, in_h), "format": "RGB888"}
+    )
+
+    picam2.configure(config)
+    picam2.start()
+    time.sleep(0.2)
+
+    return picam2
+
 #### AI HAT Set up
-#def hailo_set_up():
-    # to set up
+def setup_hailo():
+    """Load HEF and prepare Hailo device + streams."""
+
+    model_path = Path("models") / MODEL_NAME
+    hef = hpf.HEF(str(model_path))
+
+    vdevice = hpf.VDevice()
+
+    cfg = hpf.ConfigureParams.create_from_hef(
+        hef, interface=hpf.HailoStreamInterface.PCIe
+    )
+
+    network_group = vdevice.configure(hef, cfg)[0]
+    ng_params = network_group.create_params()
+
+    in_info = hef.get_input_vstream_infos()[0]
+    out_infos = hef.get_output_vstream_infos()
+
+    in_params = hpf.InputVStreamParams.make_from_network_group(
+        network_group, quantized=True, format_type=hpf.FormatType.UINT8
+    )
+    out_params = hpf.OutputVStreamParams.make_from_network_group(
+        network_group, quantized=True, format_type=hpf.FormatType.UINT8
+    )
+
+    return vdevice, network_group, ng_params, in_info, out_infos, in_params, out_params
 
 ##### Run YOLO
 
@@ -74,6 +122,14 @@ def main():
     args = parse_arguments()
     tts = TextToSpeech()
 
+    # Setup AI HAT
+    vdevice, network_group, ng_params, in_info, out_infos, in_params, out_params = setup_hailo()
+
+    # Set Up Camera
+    in_h, in_w, _ = in_info.shape
+    picam2 = setup_camera(in_w, in_h)
+
+    ## Debugging
     if args.TTS:
         hazards = [
             "Person approaching from the right",
