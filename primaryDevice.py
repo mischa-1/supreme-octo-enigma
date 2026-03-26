@@ -35,31 +35,46 @@ def parse_arguments():
 
 ##### Airpod warning
 # This code came from Tasha earlier in the semester
+
 class TextToSpeech:
-    def __init__(self, rate=160, volume=1.0):
+    def __init__(self, rate=150, volume=1.0):
         self.is_mac = platform.system() == "Darwin"
         self.rate = rate
         self.volume = volume
+
+        if not self.is_mac:
+            import pyttsx3
+            self.engine = pyttsx3.init()
+            self.engine.setProperty("rate", self.rate)
+            self.engine.setProperty("volume", self.volume)
+
+            # Try to pick a better voice
+            voices = self.engine.getProperty("voices")
+            for v in voices:
+                if "en" in v.id.lower():
+                    self.engine.setProperty("voice", v.id)
+                    break
 
     def speak(self, text: str):
         if not text:
             return
 
+        # Add slight pauses for more natural speech
+        text = text.replace(".", "... ").replace(",", ", ")
+
         if self.is_mac:
-            # Use macOS native 'say' command
-            subprocess.run(['say', text], check=True)
+            subprocess.run([
+                "say",
+                "-r", str(self.rate),   # control speed on Mac too
+                text
+            ], check=True)
         else:
-            # Fallback to pyttsx3 for other platforms
-            import pyttsx3
-            engine = pyttsx3.init()
-            engine.setProperty("rate", self.rate)
-            engine.setProperty("volume", self.volume)
-            engine.say(text)
-            engine.runAndWait()
+            self.engine.say(text)
+            self.engine.runAndWait()
 
     def cleanup(self):
-        """No cleanup needed for native say command"""
-        pass
+        if not self.is_mac:
+            self.engine.stop()
 
 
 ##### Talk to Pi ** check with Rachel
