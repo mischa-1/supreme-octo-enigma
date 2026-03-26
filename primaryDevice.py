@@ -81,7 +81,50 @@ def setup_hailo():
     return vdevice, network_group, ng_params, in_info, out_infos, in_params, out_params
 
 ##### Run YOLO
+def run_YOLO(
+    picam2,
+    network_group,
+    ng_params,
+    in_params,
+    out_params,
+    in_info,
+    score_thresh=0.25
+):
+    """Run one frame and return detected class IDs (hazards)."""
 
+    in_h, in_w, _ = in_info.shape
+
+    with network_group.activate(ng_params):
+        with hpf.InferVStreams(network_group, in_params, out_params) as pipe:
+            frame = picam2.capture_array()
+            resized = cv2.resize(frame, (in_w, in_h))
+
+            input_data = {
+                in_info.name: np.expand_dims(resized, axis=0)
+            }
+
+            outputs = pipe.infer(input_data)
+
+    # Get first output tensor
+    dets = np.asarray(outputs[list(outputs.keys())[0]])
+
+    # Remove batch dim if present
+    if dets.ndim == 3 and dets.shape[0] == 1:
+        dets = dets[0]
+
+    hazards = set()
+
+    for det in dets:
+        if len(det) < 6:
+            continue
+
+        score = det[4]
+        class_id = int(det[5])
+
+        if score >= score_thresh:
+            hazards.add(class_id)
+
+    return list(hazards)
     
 
 ##### Airpod warning
@@ -128,6 +171,18 @@ def main():
     # Set Up Camera
     in_h, in_w, _ = in_info.shape
     picam2 = setup_camera(in_w, in_h)
+
+    # Run YOLO
+    hazards = detect_hazards(
+        picam2,
+        network_group,
+        ng_params,
+        in_params,
+        out_params,
+        in_info
+    )
+    
+    print("Detected hazards:", hazards)
 
     ## Debugging
     if args.TTS:
