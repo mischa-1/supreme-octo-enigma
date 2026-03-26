@@ -43,6 +43,12 @@ def parse_arguments():
         action="store_true",
         help="Print Hazard detections"
     )
+    parser.add_argument(
+        "--num_classes",
+        type=int,
+        default=3,
+        help="Number of classes in the model"
+    )
     return parser.parse_args()
 
 ##### Run TOFL *** check with Rachel
@@ -98,11 +104,12 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=100,
+    num_classes=3,
+    score_thresh=250,
     min_hot_cells=10,
     hailo_debug=False
 ):
-    """Return whether anything was detected and which class head was strongest."""
+    """Return detection + class index using class tensors."""
 
     in_h, in_w, _ = in_info.shape
 
@@ -117,21 +124,13 @@ def run_YOLO(
 
             outputs = pipe.infer(input_data)
 
-    #------------------THIS IS WHERE LOGIC BEGINS--------------------------
-
-    if hailo_debug:
-        print("\n=== ALL OUTPUTS ===")
-        for name, arr in outputs.items():
-            arr = np.asarray(arr)
-            print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
-
-    # Only use tensors whose last dimension is 3 = your 3 classes
+    # ===== Find class tensors dynamically =====
     class_maps = []
     for name, arr in outputs.items():
         arr = np.asarray(arr)
-        arr = np.squeeze(arr)   # e.g. (80,80,3)
+        arr = np.squeeze(arr)
 
-        if arr.ndim == 3 and arr.shape[-1] == 3:
+        if arr.ndim == 3 and arr.shape[-1] == num_classes:
             class_maps.append((name, arr))
 
     if not class_maps:
@@ -139,22 +138,19 @@ def run_YOLO(
             print("No class tensors found.")
         return False, None
 
-    # Aggregate all three YOLO scales together
-    class_scores = np.zeros(3, dtype=np.float32)
-    hot_cells_per_class = np.zeros(3, dtype=int)
+    # ===== Aggregate across scales =====
+    class_scores = np.zeros(num_classes, dtype=np.float32)
+    hot_cells_per_class = np.zeros(num_classes, dtype=int)
 
     for name, arr in class_maps:
-        # strongest activation anywhere in this scale for each class
         scale_max = np.max(arr, axis=(0, 1))
         class_scores = np.maximum(class_scores, scale_max)
 
-        # how many cells pass threshold for each class at this scale
-        for c in range(3):
+        for c in range(num_classes):
             hot_cells_per_class[c] += int(np.count_nonzero(arr[:, :, c] >= score_thresh))
 
         if hailo_debug:
-            print(f"\nClass tensor: {name}")
-            print("  shape:", arr.shape)
+            print(f"\n{name} shape={arr.shape}")
             print("  per-class max:", scale_max)
 
     class_id = int(np.argmax(class_scores))
@@ -172,7 +168,6 @@ def run_YOLO(
         return True, class_id
     else:
         return False, None
-
 ##### Airpod warning
 # This code came from Tasha earlier in the semester
 
@@ -218,24 +213,26 @@ def main():
     in_h, in_w, _ = in_info.shape
     picam2 = setup_camera(in_w, in_h)
 
-    # Run YOLO
-    detected, class_id = run_YOLO(
-        picam2,
-        network_group,
-        ng_params,
-        in_params,
-        out_params,
-        in_info,
-        hailo_debug=args.hailo
-    )
-    
-    if detected:
-        print(f"Detected class {class_id}")
-        if not args.silent:
-            tts.speak(f"Hazard detected class {class_id}")
-            time.sleep(2.5)
-    else:
-        print("No detection")
+    #----------------TEST ONE FRAME----------------
+    if args.hailo:
+        # Run YOLO
+        detected, class_id = run_YOLO(
+            picam2,
+            network_group,
+            ng_params,
+            in_params,
+            out_params,
+            in_info,
+            hailo_debug=args.hailo
+        )
+        
+        if detected:
+            print(f"Detected class {class_id}")
+            if not args.silent:
+                tts.speak(f"Hazard detected class {class_id}")
+                time.sleep(2.5)
+        else:
+            print("No detection")
 
     # ===== YOLO Detection Loop =====
     try:
@@ -247,7 +244,9 @@ def main():
                 ng_params,
                 in_params,
                 out_params,
-                in_info
+                in_info,
+                num_classes=args.num_classes,
+                hailo_debug=args.hailo
             )
     
             # --- Handle Result ---
