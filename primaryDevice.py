@@ -26,7 +26,7 @@ def parse_arguments():
 
 #### AI HAT Set up
 def hailo_set_up():
-    
+    # to set up
 
 ##### Run YOLO
 
