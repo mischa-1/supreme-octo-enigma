@@ -98,7 +98,7 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=220,
+    score_thresh=100,
     min_hot_cells=10,
     hailo_debug=False
 ):
