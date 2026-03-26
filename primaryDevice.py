@@ -38,6 +38,11 @@ def parse_arguments():
         action="store_true",
         help="Enable Hailo debug output"
     )
+    parser.add_argument(
+        "--print",
+        action="store_true",
+        help="Print Hazard detections"
+    )
     return parser.parse_args()
 
 ##### Run TOFL *** check with Rachel
@@ -228,7 +233,7 @@ def main():
         print(f"Detected class {class_id}")
         if not args.silent:
             tts.speak(f"Hazard detected class {class_id}")
-            time.sleep(2.5) 
+            time.sleep(2.5)
     else:
         print("No detection")
 
@@ -247,9 +252,11 @@ def main():
     
             # --- Handle Result ---
             if not detected:
-                print("No detection")
+                if args.print:
+                    print("No detection")
             else:
-                print(f"Detected class {class_id}")
+                if args.print:
+                    print(f"Detected class {class_id}")
     
                 if not args.silent:
                     tts.speak(f"Hazard detected class {class_id}")
