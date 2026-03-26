@@ -9,6 +9,7 @@ import cv2
 
 import hailo_platform as hpf
 import subprocess
+import platform
 
 ##### Create arpsgarse (debug mode)
 # debug mode
