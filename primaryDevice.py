@@ -25,7 +25,7 @@ def parse_arguments():
 ##### Run TOFL *** check with Rachel
 
 #### AI HAT Set up
-def hailo_set_up():
+#def hailo_set_up():
     # to set up
 
 ##### Run YOLO
