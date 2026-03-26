@@ -88,9 +88,9 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=0.25
+    score_thresh=100  # you may need to tune this
 ):
-    """Run one frame and return detected class IDs (hazards)."""
+    """Return whether anything was detected + a rough class index."""
 
     in_h, in_w, _ = in_info.shape
 
@@ -105,38 +105,26 @@ def run_YOLO(
 
             outputs = pipe.infer(input_data)
 
-    # Get first output tensor
+    # Get output tensor
     dets = np.asarray(outputs[list(outputs.keys())[0]])
-    print("Raw detection shape:", dets.shape)
+    dets = np.squeeze(dets)  # (40, 40, 4)
 
-    # Remove dimensions of size 1
-    dets = np.squeeze(dets)
-    print("Squeezed detection shape:", dets.shape)
+    print("Output shape:", dets.shape)
 
-    hazards = set()
+    # --- SIMPLE LOGIC ---
+    # Find the max activation in the entire grid
+    max_val = np.max(dets)
+    max_idx = np.unravel_index(np.argmax(dets), dets.shape)
 
-    # No detections
-    if dets.size == 0:
-        return []
+    print("Max value:", max_val)
+    print("Location:", max_idx)
 
-    # If exactly one detection, make it 2D so the loop still works
-    if dets.ndim == 1:
-        dets = dets.reshape(1, -1)
-
-    for det in dets:
-        det = np.asarray(det).flatten()
-        print("det:", det)
-
-        if det.size < 6:
-            continue
-
-        score = float(det[4])
-        class_id = int(det[5])
-
-        if score >= score_thresh:
-            hazards.add(class_id)
-
-    return list(hazards)
+    # If above threshold → something detected
+    if max_val > score_thresh:
+        class_id = max_idx[2]  # last dim = "channel"
+        return True, class_id
+    else:
+        return False, None
     
 
 ##### Airpod warning
@@ -185,7 +173,7 @@ def main():
     picam2 = setup_camera(in_w, in_h)
 
     # Run YOLO
-    hazards = run_YOLO(
+    detected, class_id = run_YOLO(
         picam2,
         network_group,
         ng_params,
@@ -194,7 +182,11 @@ def main():
         in_info
     )
     
-    print("Detected hazards:", hazards)
+    if detected:
+        print(f"Detected class {class_id}")
+        #tts.speak(f"Hazard detected class {class_id}")
+    else:
+        print("No detection")
 
     ## Debugging
     if args.TTS:
