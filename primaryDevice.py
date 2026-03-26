@@ -93,7 +93,7 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=100,
+    score_thresh=220,
     hailo_debug=False
 ):
     """Debug raw Hailo outputs. This does NOT do true YOLO decoding."""
@@ -118,26 +118,27 @@ def run_YOLO(
             arr = np.asarray(arr)
             print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
 
-    # Inspect first tensor
-    first_name = list(outputs.keys())[0]
-    dets = np.asarray(outputs[first_name])
-    dets = np.squeeze(dets)
-
+    # Get tensor
+    dets = np.asarray(outputs[list(outputs.keys())[0]])
+    dets = np.squeeze(dets)  # (H, W, C)
+    
+    # --- Aggregate per-channel strength ---
+    channel_scores = np.max(dets, axis=(0, 1))   # shape: (C,)
+    
+    # Pick strongest channel
+    class_id = int(np.argmax(channel_scores))
+    confidence = int(channel_scores[class_id])
+    
     if hailo_debug:
-        print(f"\nInspecting tensor: {first_name}")
-        print("Output shape:", dets.shape)
-
-    max_val = np.max(dets)
-    max_idx = np.unravel_index(np.argmax(dets), dets.shape)
-
-    if hailo_debug:
-        print("Max value:", max_val)
-        print("Location:", max_idx)
-
-    if max_val > score_thresh:
-        return True, max_idx
+        print("Channel scores:", channel_scores)
+        print("Chosen class:", class_id)
+        print("Confidence:", confidence)
+    
+    # --- Detection threshold (LESS sensitive) ---
+    if confidence > score_thresh:
+        return True, class_id
     else:
-        return False, None    
+        return False, None
 
 ##### Airpod warning
 # This code came from Tasha earlier in the semester
