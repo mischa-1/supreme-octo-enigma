@@ -93,11 +93,11 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=245,
-    min_hot_cells=8,
+    score_thresh=250,
+    min_hot_cells=10,
     hailo_debug=False
 ):
-    """Simple raw-output detector with reduced sensitivity."""
+    """Return whether anything was detected and which class head was strongest."""
 
     in_h, in_w, _ = in_info.shape
 
@@ -111,29 +111,54 @@ def run_YOLO(
             }
 
             outputs = pipe.infer(input_data)
-            if hailo_debug:
-                print("\n=== ALL OUTPUTS ===")
-                for name, arr in outputs.items():
-                    arr = np.asarray(arr)
-                    print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
 
-    #------------------------THIS IS WHERE LOGIC BEGINS-------------------------
-
-    dets = np.asarray(outputs[list(outputs.keys())[0]])
-    dets = np.squeeze(dets)   # (H, W, C)
-
-    # strongest value in each channel over the whole frame
-    channel_scores = np.max(dets, axis=(0, 1))
-    class_id = int(np.argmax(channel_scores))
-    confidence = float(channel_scores[class_id])
-
-    # count how many grid cells in that channel are "very hot"
-    hot_mask = dets[:, :, class_id] >= score_thresh
-    hot_cells = int(np.count_nonzero(hot_mask))
+    #------------------THIS IS WHERE LOGIC BEGINS--------------------------
 
     if hailo_debug:
-        print("Output shape:", dets.shape)
-        print("Channel scores:", channel_scores)
+        print("\n=== ALL OUTPUTS ===")
+        for name, arr in outputs.items():
+            arr = np.asarray(arr)
+            print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
+
+    # Only use tensors whose last dimension is 3 = your 3 classes
+    class_maps = []
+    for name, arr in outputs.items():
+        arr = np.asarray(arr)
+        arr = np.squeeze(arr)   # e.g. (80,80,3)
+
+        if arr.ndim == 3 and arr.shape[-1] == 3:
+            class_maps.append((name, arr))
+
+    if not class_maps:
+        if hailo_debug:
+            print("No class tensors found.")
+        return False, None
+
+    # Aggregate all three YOLO scales together
+    class_scores = np.zeros(3, dtype=np.float32)
+    hot_cells_per_class = np.zeros(3, dtype=int)
+
+    for name, arr in class_maps:
+        # strongest activation anywhere in this scale for each class
+        scale_max = np.max(arr, axis=(0, 1))
+        class_scores = np.maximum(class_scores, scale_max)
+
+        # how many cells pass threshold for each class at this scale
+        for c in range(3):
+            hot_cells_per_class[c] += int(np.count_nonzero(arr[:, :, c] >= score_thresh))
+
+        if hailo_debug:
+            print(f"\nClass tensor: {name}")
+            print("  shape:", arr.shape)
+            print("  per-class max:", scale_max)
+
+    class_id = int(np.argmax(class_scores))
+    confidence = float(class_scores[class_id])
+    hot_cells = int(hot_cells_per_class[class_id])
+
+    if hailo_debug:
+        print("\nFinal class scores:", class_scores)
+        print("Hot cells per class:", hot_cells_per_class)
         print("Chosen class:", class_id)
         print("Confidence:", confidence)
         print("Hot cells:", hot_cells)
