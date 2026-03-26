@@ -105,8 +105,8 @@ def run_YOLO(
     out_params,
     in_info,
     num_classes=3,
-    score_thresh=250,
-    min_hot_cells=10,
+    score_thresh=225,
+    min_hot_cells=1,
     hailo_debug=False
 ):
     """Return detection + class index using class tensors."""
