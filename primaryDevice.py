@@ -173,7 +173,7 @@ def main():
     picam2 = setup_camera(in_w, in_h)
 
     # Run YOLO
-    hazards = detect_hazards(
+    hazards = run_YOLO(
         picam2,
         network_group,
         ng_params,
