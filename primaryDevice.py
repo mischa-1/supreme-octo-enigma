@@ -21,6 +21,9 @@ from gtts import gTTS
 # ---- CURRENT MODEL ----
 MODEL_NAME = "yolo26n-1.hef"
 
+TARGET_FPS = 30
+FRAME_TIME = 1.0 / TARGET_FPS  # ~0.0333 sec
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description= "Date for this program")
     parser.add_argument(
@@ -213,6 +216,8 @@ def main():
     in_h, in_w, _ = in_info.shape
     picam2 = setup_camera(in_w, in_h)
 
+    speech_time = time.time() - 2.5
+
     #----------------TEST ONE FRAME----------------
     if args.hailo:
         # Run YOLO
@@ -237,6 +242,7 @@ def main():
     # ===== YOLO Detection Loop =====
     try:
         while True:
+            loop_start = time.time()
             # --- Run YOLO ---
             detected, class_id = run_YOLO(
                 picam2,
@@ -258,8 +264,16 @@ def main():
                     print(f"Detected class {class_id}")
     
                 if not args.silent:
-                    tts.speak(f"Hazard detected class {class_id}")
-                    time.sleep(2.5)
+                    # only do another warning if enough time has passed from the last warning
+                    if time.time() - speech_time > 2.5:
+                        tts.speak(f"Hazard detected class {class_id}")
+                        speech_time = time.time()
+            # ===== Maintain 30 FPS =====
+            elapsed = time.time() - loop_start
+            sleep_time = FRAME_TIME - elapsed
+            
+            if sleep_time > 0:
+                time.sleep(sleep_time)
     
     except KeyboardInterrupt:
         print("\nStopping detection...")
