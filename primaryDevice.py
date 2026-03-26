@@ -111,6 +111,11 @@ def run_YOLO(
             }
 
             outputs = pipe.infer(input_data)
+            if hailo_debug:
+            print("\n=== ALL OUTPUTS ===")
+            for name, arr in outputs.items():
+                arr = np.asarray(arr)
+                print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
 
     #------------------------THIS IS WHERE LOGIC BEGINS-------------------------
 
