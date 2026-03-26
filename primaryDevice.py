@@ -14,7 +14,7 @@ import subprocess
 # debug mode
 # airpod address
 def parse_arguments():
-    parse = argparse.ArgumentParser(description= "Date for this program")
+    parser = argparse.ArgumentParser(description= "Date for this program")
     parser.add_argument(
             "--TTS",
             action="store_true",
