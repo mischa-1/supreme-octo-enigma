@@ -186,6 +186,7 @@ def main():
         print(f"Detected class {class_id}")
         if not args.silent:
             tts.speak(f"Hazard detected class {class_id}")
+            time.sleep(2.5) 
     else:
         print("No detection")
 
