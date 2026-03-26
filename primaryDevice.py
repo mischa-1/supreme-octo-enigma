@@ -33,6 +33,11 @@ def parse_arguments():
             action="store_true",
             help="Run code in silent mode for debugging purpouses"
         )
+    parser.add_argument(
+        "--hailo",
+        action="store_true",
+        help="Enable Hailo debug output"
+    )
     return parser.parse_args()
 
 ##### Run TOFL *** check with Rachel
@@ -88,9 +93,10 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=100  # you may need to tune this
+    score_thresh=100,
+    hailo_debug=False
 ):
-    """Return whether anything was detected + a rough class index."""
+    """Debug raw Hailo outputs. This does NOT do true YOLO decoding."""
 
     in_h, in_w, _ = in_info.shape
 
@@ -105,27 +111,33 @@ def run_YOLO(
 
             outputs = pipe.infer(input_data)
 
-    # Get output tensor
-    dets = np.asarray(outputs[list(outputs.keys())[0]])
-    dets = np.squeeze(dets)  # (40, 40, 4)
+    # ===== Debug: print all output tensors =====
+    if hailo_debug:
+        print("\n=== Output tensors ===")
+        for name, arr in outputs.items():
+            arr = np.asarray(arr)
+            print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
 
-    print("Output shape:", dets.shape)
+    # Inspect first tensor
+    first_name = list(outputs.keys())[0]
+    dets = np.asarray(outputs[first_name])
+    dets = np.squeeze(dets)
 
-    # --- SIMPLE LOGIC ---
-    # Find the max activation in the entire grid
+    if hailo_debug:
+        print(f"\nInspecting tensor: {first_name}")
+        print("Output shape:", dets.shape)
+
     max_val = np.max(dets)
     max_idx = np.unravel_index(np.argmax(dets), dets.shape)
 
-    print("Max value:", max_val)
-    print("Location:", max_idx)
+    if hailo_debug:
+        print("Max value:", max_val)
+        print("Location:", max_idx)
 
-    # If above threshold → something detected
     if max_val > score_thresh:
-        class_id = max_idx[2]  # last dim = "channel"
-        return True, class_id
+        return True, max_idx
     else:
-        return False, None
-    
+        return False, None    
 
 ##### Airpod warning
 # This code came from Tasha earlier in the semester
@@ -179,7 +191,8 @@ def main():
         ng_params,
         in_params,
         out_params,
-        in_info
+        in_info,
+        hailo_debug=args.hailo
     )
     
     if detected:
