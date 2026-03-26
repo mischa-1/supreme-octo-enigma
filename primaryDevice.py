@@ -93,10 +93,11 @@ def run_YOLO(
     in_params,
     out_params,
     in_info,
-    score_thresh=220,
+    score_thresh=245,
+    min_hot_cells=8,
     hailo_debug=False
 ):
-    """Debug raw Hailo outputs. This does NOT do true YOLO decoding."""
+    """Simple raw-output detector with reduced sensitivity."""
 
     in_h, in_w, _ = in_info.shape
 
@@ -111,31 +112,28 @@ def run_YOLO(
 
             outputs = pipe.infer(input_data)
 
-    # ===== Debug: print all output tensors =====
-    if hailo_debug:
-        print("\n=== Output tensors ===")
-        for name, arr in outputs.items():
-            arr = np.asarray(arr)
-            print(f"{name}: shape={arr.shape}, dtype={arr.dtype}")
+    #------------------------THIS IS WHERE LOGIC BEGINS-------------------------
 
-    # Get tensor
     dets = np.asarray(outputs[list(outputs.keys())[0]])
-    dets = np.squeeze(dets)  # (H, W, C)
-    
-    # --- Aggregate per-channel strength ---
-    channel_scores = np.max(dets, axis=(0, 1))   # shape: (C,)
-    
-    # Pick strongest channel
+    dets = np.squeeze(dets)   # (H, W, C)
+
+    # strongest value in each channel over the whole frame
+    channel_scores = np.max(dets, axis=(0, 1))
     class_id = int(np.argmax(channel_scores))
-    confidence = int(channel_scores[class_id])
-    
+    confidence = float(channel_scores[class_id])
+
+    # count how many grid cells in that channel are "very hot"
+    hot_mask = dets[:, :, class_id] >= score_thresh
+    hot_cells = int(np.count_nonzero(hot_mask))
+
     if hailo_debug:
+        print("Output shape:", dets.shape)
         print("Channel scores:", channel_scores)
         print("Chosen class:", class_id)
         print("Confidence:", confidence)
-    
-    # --- Detection threshold (LESS sensitive) ---
-    if confidence > score_thresh:
+        print("Hot cells:", hot_cells)
+
+    if confidence >= score_thresh and hot_cells >= min_hot_cells:
         return True, class_id
     else:
         return False, None
