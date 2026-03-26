@@ -17,12 +17,19 @@ class TextToSpeech:
             subprocess.run(['say', text], check=True)
         else:
             # Fallback to pyttsx3 for other platforms
-            import pyttsx3
-            engine = pyttsx3.init()
-            engine.setProperty("rate", self.rate)
-            engine.setProperty("volume", self.volume)
-            engine.say(text)
-            engine.runAndWait()
+             from gtts import gTTS
+            from playsound import playsound
+            import os
+
+            filename = "tts_output.mp3"
+
+            tts = gTTS(text=text, lang="en")
+            tts.save(filename)
+
+            playsound(filename)
+
+            # Optional: delete file after playing
+            os.remove(filename)
 
     def cleanup(self):
         """No cleanup needed for native say command"""
