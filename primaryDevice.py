@@ -1,4 +1,4 @@
-##### Input Libaries
+##### Import Libaries
 import time
 import numpy as np
 import argparse
@@ -13,6 +13,14 @@ import subprocess
 ##### Create arpsgarse (debug mode)
 # debug mode
 # airpod address
+def parse_arguments():
+    parse = argparse.ArgumentParser(description= "Date for this program")
+    parser.add_argument(
+            "--TTS",
+            action="store_true",
+            help="Test that TTS is working on the Pi with basic example"
+        )
+    return parser.parse_args()
 
 ##### Run TOFL *** check with Rachel
 
@@ -53,21 +61,28 @@ class TextToSpeech:
 ##### main
 def main():
 
-    # This is gonna be debug text to speech thing
+    # Setting things up
+    args = parse_arguments()
     tts = TextToSpeech()
 
-    hazards = [
-        "Person approaching from the right",
-        "Obstacle directly ahead",
-        "Clear path",
-        "No hazards detected"
-    ]
+    if args.TTS:
 
-    for hazard in hazards:
-        print(f"TTS Output: {hazard}")
-        tts.speak(hazard)
-        time.sleep(0.3)
+        # This is gonna be debug text to speech thing
+        tts = TextToSpeech()
     
+        hazards = [
+            "Person approaching from the right",
+            "Obstacle directly ahead",
+            "Clear path",
+            "No hazards detected"
+        ]
+    
+        for hazard in hazards:
+            print(f"TTS Output: {hazard}")
+            tts.speak(hazard)
+            time.sleep(0.3)
+
+    # Cleaning things up SAFELY
     tts.cleanup()
 
 
