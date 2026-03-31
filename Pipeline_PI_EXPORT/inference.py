@@ -5,14 +5,17 @@ inference.py
 Pedestrian Signal Inference
 Stage 1: Detector
     - picamera mode  -> Hailo HEF detector (AI HAT)
-    - webcam/video   -> ONNX detector
+    - webcam/video   -> ONNX detector by default
+    - video/webcam can also be forced to HEF with --detector-backend hef
 Stage 2: CNN+GRU classifier (.onnx via ONNX Runtime)
 
 Examples:
   python3 inference.py --initialize
   python3 inference.py --mode picamera
   python3 inference.py --mode webcam
+  python3 inference.py --mode webcam --detector-backend hef
   python3 inference.py --mode video --source sample.mp4
+  python3 inference.py --mode video --source sample.mp4 --detector-backend hef
   python3 inference.py --mode video --source sample.mp4 --audio tts
   python3 inference.py --mode video --source sample.mp4 --save
 """
@@ -29,7 +32,6 @@ import struct
 import tempfile
 import subprocess
 import sys
-import shutil
 from pathlib import Path
 from collections import deque
 
@@ -509,10 +511,26 @@ class HefDetector(BaseDetector):
         return postprocess_yolo_like(raw, frame.shape[1], frame.shape[0], CONF_THRESH)
 
 
-def load_detector(mode: str, onnx_path: Path, hef_path: Path):
-    if mode == "picamera":
+def load_detector(mode: str, detector_backend: str, onnx_path: Path, hef_path: Path):
+    """
+    detector_backend:
+      - auto: old behavior
+          picamera -> hef
+          webcam/video -> onnx
+      - onnx: force ONNX
+      - hef:  force HEF
+    """
+    if detector_backend == "auto":
+        resolved_backend = "hef" if mode == "picamera" else "onnx"
+    else:
+        resolved_backend = detector_backend
+
+    if resolved_backend == "hef":
         return HefDetector(hef_path), "hef"
-    return OnnxDetector(onnx_path), "onnx"
+    elif resolved_backend == "onnx":
+        return OnnxDetector(onnx_path), "onnx"
+    else:
+        raise ValueError(f"Unsupported detector backend: {resolved_backend}")
 
 
 def load_classifier_session(path: Path):
@@ -803,6 +821,10 @@ def main():
     parser.add_argument("--source", default=None,
                         help="Video file path (required for --mode video)")
 
+    parser.add_argument("--detector-backend", default="auto",
+                        choices=["auto", "onnx", "hef"],
+                        help="Detector backend: auto = picamera->hef, webcam/video->onnx")
+
     parser.add_argument("--detector-onnx", default=str(DETECTOR_ONNX))
     parser.add_argument("--detector-hef", default=str(DETECTOR_HEF))
 
@@ -839,6 +861,7 @@ def main():
 
     detector, detector_backend = load_detector(
         args.mode,
+        args.detector_backend,
         Path(args.detector_onnx).expanduser().resolve(),
         Path(args.detector_hef).expanduser().resolve(),
     )
@@ -854,11 +877,12 @@ def main():
     else:
         source = open_video(args.source)
 
-    print(f"Classes:         {classes}")
-    print(f"Torch device:    {TORCH_DEVICE}")
-    print(f"Audio mode:      {args.audio}")
-    print(f"Detector mode:   {detector_backend}")
-    print(f"Save video:      {args.save}" + (f" → {args.save_path}" if args.save else ""))
+    print(f"Classes:             {classes}")
+    print(f"Torch device:        {TORCH_DEVICE}")
+    print(f"Audio mode:          {args.audio}")
+    print(f"Detector selection:  {args.detector_backend}")
+    print(f"Detector mode:       {detector_backend}")
+    print(f"Save video:          {args.save}" + (f" → {args.save_path}" if args.save else ""))
 
     run(
         source,
