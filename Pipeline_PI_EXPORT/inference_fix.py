@@ -5,19 +5,24 @@ inference.py
 Pedestrian Signal Inference
 Stage 1: Detector
     - picamera mode  -> Hailo HEF detector (AI HAT)
-    - webcam/video   -> ONNX detector
-Stage 2: CNN+GRU classifier
-    - ONNX via ONNX Runtime
-    - or HEF via Hailo runtime
+    - webcam/video   -> ONNX detector by default
+    - video/webcam can also be forced to HEF with --detector-backend hef
+Stage 2: CNN+GRU classifier (.onnx via ONNX Runtime)
 
 Examples:
   python3 inference.py --initialize
   python3 inference.py --mode picamera
   python3 inference.py --mode webcam
+  python3 inference.py --mode webcam --detector-backend hef
   python3 inference.py --mode video --source sample.mp4
+  python3 inference.py --mode video --source sample.mp4 --detector-backend hef
   python3 inference.py --mode video --source sample.mp4 --audio tts
   python3 inference.py --mode video --source sample.mp4 --save
-  python3 inference.py --mode picamera --classifier-backend hef
+
+  # New shortcut for Pi video testing:
+  python3 inference.py --pi-video
+  python3 inference.py --pi-video --detector-backend hef
+  python3 inference.py --pi-video --save
 """
 
 from __future__ import annotations
@@ -51,13 +56,15 @@ except ImportError:
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
+# Relative paths from the folder containing this script
 DETECTOR_HEF = SCRIPT_DIR / "detector.hef"
 DETECTOR_ONNX = SCRIPT_DIR / "detector.onnx"
-
 CLASSIFIER_ONNX = SCRIPT_DIR / "runs" / "classifier" / "best.onnx"
-CLASSIFIER_HEF = SCRIPT_DIR / "runs" / "classifier" / "best.hef"
 CLASS_MAP_PATH = SCRIPT_DIR / "runs" / "classifier" / "class_map.json"
 REQUIREMENTS_PATH = SCRIPT_DIR / "requirements.txt"
+
+# New default Pi video file
+DEFAULT_PI_VIDEO = SCRIPT_DIR / "IMG_7623.mp4"
 
 CONF_THRESH = 0.30
 PADDING = 0.20
@@ -73,6 +80,7 @@ DEFAULT_SAVE_PATH = "output.mp4"
 DET_INPUT_W = 640
 DET_INPUT_H = 640
 
+# Update if your detector class order differs
 DETECTOR_CLASS_NAMES = ["ped_walk", "ped_stop", "ped_crosswalk"]
 VALID_DETECTOR_CLASS_IDS = set(range(len(DETECTOR_CLASS_NAMES)))
 
@@ -125,7 +133,10 @@ def initialize_environment(requirements_path: Path) -> None:
     print(f"Using requirements file: {requirements_path}")
     print()
 
+    # Upgrade pip first
     run_command([sys.executable, "-m", "pip", "install", "--upgrade", "pip"], check=True)
+
+    # Install Python dependencies
     run_command([sys.executable, "-m", "pip", "install", "-r", str(requirements_path)], check=True)
 
     print()
@@ -500,92 +511,42 @@ class HefDetector(BaseDetector):
             with InferVStreams(self.network_group, input_params, output_params) as infer_pipeline:
                 results = infer_pipeline.infer({self.input_name: np.expand_dims(inp, axis=0)})
 
-        raw = results[self.output_names[0]]
+        if len(self.output_names) == 1:
+            raw = results[self.output_names[0]]
+        else:
+            raw = results[self.output_names[0]]
+
         return postprocess_yolo_like(raw, frame.shape[1], frame.shape[0], CONF_THRESH)
 
 
-def load_detector(mode: str, onnx_path: Path, hef_path: Path):
-    if mode == "picamera":
+def load_detector(mode: str, detector_backend: str, onnx_path: Path, hef_path: Path):
+    """
+    detector_backend:
+      - auto: old behavior
+          picamera -> hef
+          webcam/video -> onnx
+      - onnx: force ONNX
+      - hef:  force HEF
+    """
+    if detector_backend == "auto":
+        resolved_backend = "hef" if mode == "picamera" else "onnx"
+    else:
+        resolved_backend = detector_backend
+
+    if resolved_backend == "hef":
         return HefDetector(hef_path), "hef"
-    return OnnxDetector(onnx_path), "onnx"
+    elif resolved_backend == "onnx":
+        return OnnxDetector(onnx_path), "onnx"
+    else:
+        raise ValueError(f"Unsupported detector backend: {resolved_backend}")
 
 
-# ──────────────────────────────────────────────
-# CLASSIFIER BACKENDS
-# ──────────────────────────────────────────────
-
-class HefClassifier:
-    def __init__(self, path: Path):
-        path = Path(path).resolve()
-        if not path.exists():
-            raise FileNotFoundError(f"HEF classifier not found: {path}")
-
-        self.path = path
-
-        try:
-            from hailo_platform import HEF, VDevice, ConfigureParams, HailoStreamInterface
-            import hailo_platform
-        except ImportError as e:
-            raise RuntimeError(
-                "hailo_platform is not installed. Install/activate the Hailo runtime on the Pi first."
-            ) from e
-
-        self.hailo_platform = hailo_platform
-        self.HEF = HEF
-        self.VDevice = VDevice
-        self.ConfigureParams = ConfigureParams
-        self.HailoStreamInterface = HailoStreamInterface
-
-        self.hef = HEF(str(path))
-        self.target = VDevice()
-        self.configure_params = ConfigureParams.create_from_hef(
-            hef=self.hef,
-            interface=HailoStreamInterface.PCIe
-        )
-        self.network_group = self.target.configure(self.hef, self.configure_params)[0]
-        self.network_group_params = self.network_group.create_params()
-
-        self.input_vstream_info = self.hef.get_input_vstream_infos()[0]
-        self.output_vstream_infos = self.hef.get_output_vstream_infos()
-
-        self.input_name = self.input_vstream_info.name
-        self.output_names = [o.name for o in self.output_vstream_infos]
-
-        print(f"Loaded HEF classifier: {path}")
-
-    def infer(self, seq):
-        from hailo_platform import InputVStreamParams, OutputVStreamParams, FormatType, InferVStreams
-
-        input_params = InputVStreamParams.make_from_network_group(
-            self.network_group,
-            quantized=False,
-            format_type=FormatType.FLOAT32
-        )
-        output_params = OutputVStreamParams.make_from_network_group(
-            self.network_group,
-            quantized=False,
-            format_type=FormatType.FLOAT32
-        )
-
-        with self.network_group.activate(self.network_group_params):
-            with InferVStreams(self.network_group, input_params, output_params) as infer_pipeline:
-                results = infer_pipeline.infer({self.input_name: seq})
-
-        return results[self.output_names[0]]
-
-
-def load_classifier_onnx(path: Path):
+def load_classifier_session(path: Path):
     path = Path(path).resolve()
     if not path.exists():
-        raise FileNotFoundError(f"Classifier ONNX not found: {path}")
-    print(f"Loading ONNX classifier: {path}")
+        raise FileNotFoundError(f"Classifier not found: {path}")
+    print(f"Loading classifier: {path}")
     return ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
-
-
-def load_classifier(classifier_backend: str, onnx_path: Path, hef_path: Path):
-    if classifier_backend == "hef":
-        return HefClassifier(hef_path), "hef"
-    return load_classifier_onnx(onnx_path), "onnx"
 
 
 # ──────────────────────────────────────────────
@@ -634,24 +595,13 @@ def softmax(logits):
     return e / e.sum()
 
 
-def run_classifier(session, frame_buffer, classes, backend="onnx"):
+def run_classifier(session, frame_buffer, classes):
     if len(frame_buffer) < SEQUENCE_LENGTH:
         return None, 0.0
 
     seq = np.stack(list(frame_buffer), axis=0)[np.newaxis].astype(np.float32)
-
-    if backend == "hef":
-        raw = session.infer(seq)
-        logits = np.array(raw)
-
-        if logits.ndim >= 3:
-            logits = logits[0][0]
-        elif logits.ndim == 2:
-            logits = logits[0]
-    else:
-        input_name = session.get_inputs()[0].name
-        logits = session.run(None, {input_name: seq})[0][0]
-
+    input_name = session.get_inputs()[0].name
+    logits = session.run(None, {input_name: seq})[0][0]
     probs = softmax(logits)
     pred_idx = int(np.argmax(probs))
 
@@ -673,8 +623,7 @@ STATE_COLORS = {
 }
 
 
-def draw_overlay(frame, box, state, confidence, fps, buffer_len, real_detection,
-                 detector_backend, classifier_backend):
+def draw_overlay(frame, box, state, confidence, fps, buffer_len, real_detection, detector_backend):
     display = cv2.resize(frame, (DISPLAY_W, DISPLAY_H))
     sx = DISPLAY_W / frame.shape[1]
     sy = DISPLAY_H / frame.shape[0]
@@ -700,11 +649,9 @@ def draw_overlay(frame, box, state, confidence, fps, buffer_len, real_detection,
         )
 
     label = f"{state.upper()}  {confidence * 100:.0f}%" if state else "NO SIGNAL"
-    cv2.rectangle(display, (0, 0), (DISPLAY_W, 95), (0, 0, 0), -1)
+    cv2.rectangle(display, (0, 0), (DISPLAY_W, 78), (0, 0, 0), -1)
     cv2.putText(display, label, (12, 32), cv2.FONT_HERSHEY_SIMPLEX, 1.0, color, 2)
     cv2.putText(display, f"detector: {detector_backend}", (12, 62),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.55, (200, 200, 200), 1)
-    cv2.putText(display, f"classifier: {classifier_backend}", (12, 84),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.55, (200, 200, 200), 1)
 
     cv2.putText(display, f"{fps:.1f} fps",
@@ -734,9 +681,11 @@ def open_webcam():
 
 
 def open_video(path):
-    cap = cv2.VideoCapture(str(Path(path).expanduser().resolve()))
+    resolved = Path(path).expanduser().resolve()
+    print(f"Opening video: {resolved}")
+    cap = cv2.VideoCapture(str(resolved))
     if not cap.isOpened():
-        raise RuntimeError(f"Could not open video: {path}")
+        raise RuntimeError(f"Could not open video: {resolved}")
     return cap
 
 
@@ -773,7 +722,7 @@ def open_picamera():
 # MAIN LOOP
 # ──────────────────────────────────────────────
 
-def run(source, detector, detector_backend, classifier_session, classifier_backend, classes,
+def run(source, detector, detector_backend, classifier_session, classes,
         audio_mode="tones", save=False, save_path="output.mp4"):
 
     audio = AudioManager(mode=audio_mode)
@@ -797,7 +746,6 @@ def run(source, detector, detector_backend, classifier_session, classifier_backe
 
     print(f"Audio mode: {audio_mode}")
     print(f"Detector backend: {detector_backend}")
-    print(f"Classifier backend: {classifier_backend}")
     print("Running — press Q to quit\n")
 
     while True:
@@ -833,12 +781,7 @@ def run(source, detector, detector_backend, classifier_session, classifier_backe
             real_detection = False
 
         if len(buffer) == SEQUENCE_LENGTH:
-            state, confidence = run_classifier(
-                classifier_session,
-                buffer,
-                classes,
-                backend=classifier_backend
-            )
+            state, confidence = run_classifier(classifier_session, buffer, classes)
             audio.update(state, real_detection)
             print(
                 f"\r  {str(state):<10} {confidence*100:5.1f}%"
@@ -854,8 +797,7 @@ def run(source, detector, detector_backend, classifier_session, classifier_backe
         fps_acc.append(1.0 / max(time.time() - t0, 1e-6))
         display = draw_overlay(
             frame, box, state, confidence,
-            float(np.mean(fps_acc)), len(buffer), real_detection,
-            detector_backend, classifier_backend
+            float(np.mean(fps_acc)), len(buffer), real_detection, detector_backend
         )
 
         cv2.imshow("Pedestrian Signal", display)
@@ -887,18 +829,20 @@ def main():
     parser.add_argument("--mode", choices=["picamera", "webcam", "video"],
                         help="Inference source mode")
     parser.add_argument("--source", default=None,
-                        help="Video file path (required for --mode video)")
+                        help="Video file path (required for --mode video unless using --pi-video)")
+
+    # New flag:
+    parser.add_argument("--pi-video", action="store_true",
+                        help="Run on the Pi using IMG_7623.mp4 instead of a live camera feed")
+
+    parser.add_argument("--detector-backend", default="auto",
+                        choices=["auto", "onnx", "hef"],
+                        help="Detector backend: auto = picamera->hef, webcam/video->onnx")
 
     parser.add_argument("--detector-onnx", default=str(DETECTOR_ONNX))
     parser.add_argument("--detector-hef", default=str(DETECTOR_HEF))
 
-    parser.add_argument("--classifier", default=str(CLASSIFIER_ONNX),
-                        help="Path to classifier ONNX")
-    parser.add_argument("--classifier-hef", default=str(CLASSIFIER_HEF),
-                        help="Path to classifier HEF")
-    parser.add_argument("--classifier-backend", choices=["onnx", "hef"], default="onnx",
-                        help="Classifier backend")
-
+    parser.add_argument("--classifier", default=str(CLASSIFIER_ONNX))
     parser.add_argument("--classmap", default=str(CLASS_MAP_PATH))
     parser.add_argument("--requirements", default=str(REQUIREMENTS_PATH))
 
@@ -916,11 +860,23 @@ def main():
         initialize_environment(Path(args.requirements))
         return
 
+    # If --pi-video is used, override mode/source automatically
+    if args.pi_video:
+        args.mode = "video"
+        args.source = str(DEFAULT_PI_VIDEO)
+
     if not args.mode:
-        parser.error("--mode is required unless using --initialize")
+        parser.error("--mode is required unless using --initialize or --pi-video")
 
     if args.mode == "video" and not args.source:
         parser.error("--source is required for --mode video")
+
+    if args.pi_video:
+        pi_video_path = Path(args.source).expanduser().resolve()
+        if not pi_video_path.exists():
+            raise FileNotFoundError(
+                f"--pi-video was used but the file was not found: {pi_video_path}"
+            )
 
     classmap_path = Path(args.classmap).expanduser().resolve()
     if not classmap_path.exists():
@@ -931,14 +887,13 @@ def main():
 
     detector, detector_backend = load_detector(
         args.mode,
+        args.detector_backend,
         Path(args.detector_onnx).expanduser().resolve(),
         Path(args.detector_hef).expanduser().resolve(),
     )
 
-    classifier_session, classifier_backend = load_classifier(
-        args.classifier_backend,
-        Path(args.classifier).expanduser().resolve(),
-        Path(args.classifier_hef).expanduser().resolve(),
+    classifier_session = load_classifier_session(
+        Path(args.classifier).expanduser().resolve()
     )
 
     if args.mode == "picamera":
@@ -948,19 +903,20 @@ def main():
     else:
         source = open_video(args.source)
 
-    print(f"Classes:              {classes}")
-    print(f"Torch device:         {TORCH_DEVICE}")
-    print(f"Audio mode:           {args.audio}")
-    print(f"Detector mode:        {detector_backend}")
-    print(f"Classifier backend:   {classifier_backend}")
-    print(f"Save video:           {args.save}" + (f" → {args.save_path}" if args.save else ""))
+    print(f"Classes:             {classes}")
+    print(f"Torch device:        {TORCH_DEVICE}")
+    print(f"Audio mode:          {args.audio}")
+    print(f"Detector selection:  {args.detector_backend}")
+    print(f"Detector mode:       {detector_backend}")
+    print(f"Source mode:         {args.mode}")
+    print(f"Source path:         {args.source if args.mode == 'video' else 'live camera'}")
+    print(f"Save video:          {args.save}" + (f" → {args.save_path}" if args.save else ""))
 
     run(
         source,
         detector,
         detector_backend,
         classifier_session,
-        classifier_backend,
         classes,
         audio_mode=args.audio,
         save=args.save,
