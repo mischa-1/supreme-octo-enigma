@@ -43,7 +43,7 @@ else:
     def motor_on(pin: int):
         pass
 
- def main():
+def main():
     device = "mps" if torch.backends.mps.is_available() else "cpu"
 
     startTime = time.time()
