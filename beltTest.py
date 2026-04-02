@@ -1,6 +1,7 @@
 import platform
 import time
 import lgpio
+import torch
 
 IS_PI = platform.system() == "Linux"
 
