@@ -49,23 +49,29 @@ def main():
 
     startTime = time.time()
 
+    print("Right")
+
     motor_on(LED_R)
     motor_off_single(LED_M)
     motor_off_single(LED_L)
 
-    time.sleep(3)
+    time.sleep(6)
+
+    print("Middle")
 
     motor_on(LED_M)
     motor_off_single(LED_R)
     motor_off_single(LED_L)
 
-    time.sleep(3)
+    time.sleep(6)
+
+    print("Left")
 
     motor_on(LED_L)
     motor_off_single(LED_M)
     motor_off_single(LED_R)
 
-    time.sleep(3)
+    time.sleep(6)
 
     motors_off()
 
