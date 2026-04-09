@@ -407,6 +407,48 @@ def postprocess_yolo_like(output, orig_w, orig_h, conf_thresh=0.30, iou_thresh=0
 
     return detections
 
+def postprocess_hef_single_class(output, orig_w, orig_h, conf_thresh=0.05, iou_thresh=0.45):
+    pred = np.array(output, dtype=np.float32)
+
+    if pred.ndim == 4:
+        pred = pred[0, 0]
+    elif pred.ndim == 3:
+        pred = pred[0]
+
+    if pred.ndim != 2 or pred.shape[1] != 5:
+        print("Unexpected HEF output shape:", pred.shape)
+        return []
+
+    best_idx = int(np.argmax(pred[:, 4]))
+    cx, cy, bw, bh, score = pred[best_idx]
+
+    print("BEST RAW DET:", cx, cy, bw, bh, score)
+
+    if score < conf_thresh:
+        return []
+
+    _, scale, pad_x, pad_y = letterbox_image(
+        np.zeros((orig_h, orig_w, 3), dtype=np.uint8),
+        (DET_INPUT_W, DET_INPUT_H)
+    )
+
+    x1 = (cx - bw / 2 - pad_x) / scale
+    y1 = (cy - bh / 2 - pad_y) / scale
+    x2 = (cx + bw / 2 - pad_x) / scale
+    y2 = (cy + bh / 2 - pad_y) / scale
+
+    x1 = max(0, min(orig_w - 1, x1))
+    y1 = max(0, min(orig_h - 1, y1))
+    x2 = max(0, min(orig_w - 1, x2))
+    y2 = max(0, min(orig_h - 1, y2))
+
+    if x2 <= x1 or y2 <= y1:
+        print("Best box collapsed after scaling")
+        return []
+
+    return [(int(x1), int(y1), int(x2), int(y2), float(score), 0)]
+
+"""
 
 def postprocess_hef_single_class(output, orig_w, orig_h, conf_thresh=0.30, iou_thresh=0.45):
     pred = np.array(output, dtype=np.float32)
@@ -469,6 +511,8 @@ def postprocess_hef_single_class(output, orig_w, orig_h, conf_thresh=0.30, iou_t
         detections.append((x1, y1, x2, y2, float(scores[i]), 0))
 
     return detections
+
+"""
 
 
 class BaseDetector:
