@@ -483,7 +483,7 @@ class HefDetector(BaseDetector):
         img, _, _, _ = letterbox_image(frame, (DET_INPUT_W, DET_INPUT_H))
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.uint8)
         return img
-
+    """
     def infer(self, frame):
         from hailo_platform import InputVStreamParams, OutputVStreamParams, FormatType, InferVStreams
 
@@ -509,6 +509,32 @@ class HefDetector(BaseDetector):
             raw = results[self.output_names[0]]
 
         return postprocess_yolo_like(raw, frame.shape[1], frame.shape[0], CONF_THRESH)
+    """
+    def infer(self, frame):
+        from hailo_platform import InputVStreamParams, OutputVStreamParams, FormatType, InferVStreams
+    
+        inp = self.preprocess(frame)
+    
+        input_params = InputVStreamParams.make_from_network_group(
+            self.network_group,
+            quantized=True,
+            format_type=FormatType.UINT8
+        )
+        output_params = OutputVStreamParams.make_from_network_group(
+            self.network_group,
+            quantized=True
+        )
+    
+        with self.network_group.activate(self.network_group_params):
+            with InferVStreams(self.network_group, input_params, output_params) as infer_pipeline:
+                results = infer_pipeline.infer({self.input_name: np.expand_dims(inp, axis=0)})
+    
+        print("HEF output names:", list(results.keys()))
+        for name, arr in results.items():
+            arr = np.array(arr)
+            print(name, arr.shape, arr.dtype, arr.min(), arr.max())
+    
+        raise SystemExit("Stop after one inference for debugging")
 
 
 def load_detector(mode: str, detector_backend: str, onnx_path: Path, hef_path: Path):
