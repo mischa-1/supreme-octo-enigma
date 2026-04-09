@@ -57,7 +57,7 @@ CLASSIFIER_ONNX = SCRIPT_DIR / "runs" / "classifier" / "best.onnx"
 CLASS_MAP_PATH = SCRIPT_DIR / "runs" / "classifier" / "class_map.json"
 REQUIREMENTS_PATH = SCRIPT_DIR / "requirements.txt"
 
-CONF_THRESH = 0.30
+CONF_THRESH = 0.05
 PADDING = 0.20
 SEQUENCE_LENGTH = 30
 IMG_SIZE = 128
