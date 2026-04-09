@@ -18,11 +18,6 @@ Examples:
   python3 inference.py --mode video --source sample.mp4 --detector-backend hef
   python3 inference.py --mode video --source sample.mp4 --audio tts
   python3 inference.py --mode video --source sample.mp4 --save
-
-  # New shortcut for Pi video testing:
-  python3 inference.py --pi-video
-  python3 inference.py --pi-video --detector-backend hef
-  python3 inference.py --pi-video --save
 """
 
 from __future__ import annotations
@@ -56,15 +51,11 @@ except ImportError:
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
-# Relative paths from the folder containing this script
 DETECTOR_HEF = SCRIPT_DIR / "detector.hef"
 DETECTOR_ONNX = SCRIPT_DIR / "detector.onnx"
 CLASSIFIER_ONNX = SCRIPT_DIR / "runs" / "classifier" / "best.onnx"
 CLASS_MAP_PATH = SCRIPT_DIR / "runs" / "classifier" / "class_map.json"
 REQUIREMENTS_PATH = SCRIPT_DIR / "requirements.txt"
-
-# New default Pi video file
-DEFAULT_PI_VIDEO = SCRIPT_DIR / "IMG_7623.mp4"
 
 CONF_THRESH = 0.30
 PADDING = 0.20
@@ -80,9 +71,9 @@ DEFAULT_SAVE_PATH = "output.mp4"
 DET_INPUT_W = 640
 DET_INPUT_H = 640
 
-# Update if your detector class order differs
-DETECTOR_CLASS_NAMES = ["ped_walk", "ped_stop", "ped_crosswalk"]
-VALID_DETECTOR_CLASS_IDS = set(range(len(DETECTOR_CLASS_NAMES)))
+# HEF detector appears to be single-class object localization
+DETECTOR_CLASS_NAMES = ["signal"]
+VALID_DETECTOR_CLASS_IDS = {0}
 
 TONE_REPEAT_INTERVAL = {
     "walk": 1.5,
@@ -133,10 +124,7 @@ def initialize_environment(requirements_path: Path) -> None:
     print(f"Using requirements file: {requirements_path}")
     print()
 
-    # Upgrade pip first
     run_command([sys.executable, "-m", "pip", "install", "--upgrade", "pip"], check=True)
-
-    # Install Python dependencies
     run_command([sys.executable, "-m", "pip", "install", "-r", str(requirements_path)], check=True)
 
     print()
@@ -420,6 +408,69 @@ def postprocess_yolo_like(output, orig_w, orig_h, conf_thresh=0.30, iou_thresh=0
     return detections
 
 
+def postprocess_hef_single_class(output, orig_w, orig_h, conf_thresh=0.30, iou_thresh=0.45):
+    pred = np.array(output, dtype=np.float32)
+
+    # Expected HEF shape from your debug run: (1, 1, 8400, 5)
+    if pred.ndim == 4:
+        pred = pred[0, 0]
+    elif pred.ndim == 3:
+        pred = pred[0]
+
+    if pred.ndim != 2 or pred.shape[1] != 5:
+        print("Unexpected HEF output shape:", pred.shape)
+        return []
+
+    _, scale, pad_x, pad_y = letterbox_image(
+        np.zeros((orig_h, orig_w, 3), dtype=np.uint8),
+        (DET_INPUT_W, DET_INPUT_H)
+    )
+
+    boxes = []
+    scores = []
+
+    for row in pred:
+        cx, cy, bw, bh, score = row
+
+        if score < conf_thresh:
+            continue
+
+        x1 = cx - bw / 2
+        y1 = cy - bh / 2
+        x2 = cx + bw / 2
+        y2 = cy + bh / 2
+
+        x1 = (x1 - pad_x) / scale
+        y1 = (y1 - pad_y) / scale
+        x2 = (x2 - pad_x) / scale
+        y2 = (y2 - pad_y) / scale
+
+        x1 = max(0, min(orig_w - 1, x1))
+        y1 = max(0, min(orig_h - 1, y1))
+        x2 = max(0, min(orig_w - 1, x2))
+        y2 = max(0, min(orig_h - 1, y2))
+
+        if x2 <= x1 or y2 <= y1:
+            continue
+
+        boxes.append([x1, y1, x2, y2])
+        scores.append(float(score))
+
+    if not boxes:
+        return []
+
+    boxes = np.array(boxes, dtype=np.float32)
+    scores = np.array(scores, dtype=np.float32)
+    keep = nms_numpy(boxes, scores, iou_thresh=iou_thresh)
+
+    detections = []
+    for i in keep:
+        x1, y1, x2, y2 = boxes[i].astype(int)
+        detections.append((x1, y1, x2, y2, float(scores[i]), 0))
+
+    return detections
+
+
 class BaseDetector:
     def infer(self, frame):
         raise NotImplementedError
@@ -435,6 +486,8 @@ class OnnxDetector(BaseDetector):
         self.input_name = self.session.get_inputs()[0].name
         self.output_names = [o.name for o in self.session.get_outputs()]
         print(f"Loaded ONNX detector: {path}")
+        print(f"ONNX input: {self.input_name}")
+        print(f"ONNX outputs: {self.output_names}")
 
     def preprocess(self, frame):
         img, _, _, _ = letterbox_image(frame, (DET_INPUT_W, DET_INPUT_H))
@@ -445,6 +498,9 @@ class OnnxDetector(BaseDetector):
     def infer(self, frame):
         inp = self.preprocess(frame)
         outputs = self.session.run(self.output_names, {self.input_name: inp})
+
+        # Current ONNX path still assumes first output is the detection tensor.
+        # This matches your original code behavior.
         return postprocess_yolo_like(outputs[0], frame.shape[1], frame.shape[0], CONF_THRESH)
 
 
@@ -486,6 +542,8 @@ class HefDetector(BaseDetector):
         self.output_names = [o.name for o in self.output_vstream_infos]
 
         print(f"Loaded HEF detector: {path}")
+        print(f"HEF input: {self.input_name}")
+        print(f"HEF outputs: {self.output_names}")
 
     def preprocess(self, frame):
         img, _, _, _ = letterbox_image(frame, (DET_INPUT_W, DET_INPUT_H))
@@ -504,19 +562,16 @@ class HefDetector(BaseDetector):
         )
         output_params = OutputVStreamParams.make_from_network_group(
             self.network_group,
-            quantized=True
+            quantized=False,
+            format_type=FormatType.FLOAT32
         )
 
         with self.network_group.activate(self.network_group_params):
             with InferVStreams(self.network_group, input_params, output_params) as infer_pipeline:
                 results = infer_pipeline.infer({self.input_name: np.expand_dims(inp, axis=0)})
 
-        if len(self.output_names) == 1:
-            raw = results[self.output_names[0]]
-        else:
-            raw = results[self.output_names[0]]
-
-        return postprocess_yolo_like(raw, frame.shape[1], frame.shape[0], CONF_THRESH)
+        raw = results[self.output_names[0]]
+        return postprocess_hef_single_class(raw, frame.shape[1], frame.shape[0], CONF_THRESH)
 
 
 def load_detector(mode: str, detector_backend: str, onnx_path: Path, hef_path: Path):
@@ -681,11 +736,9 @@ def open_webcam():
 
 
 def open_video(path):
-    resolved = Path(path).expanduser().resolve()
-    print(f"Opening video: {resolved}")
-    cap = cv2.VideoCapture(str(resolved))
+    cap = cv2.VideoCapture(str(Path(path).expanduser().resolve()))
     if not cap.isOpened():
-        raise RuntimeError(f"Could not open video: {resolved}")
+        raise RuntimeError(f"Could not open video: {path}")
     return cap
 
 
@@ -829,11 +882,7 @@ def main():
     parser.add_argument("--mode", choices=["picamera", "webcam", "video"],
                         help="Inference source mode")
     parser.add_argument("--source", default=None,
-                        help="Video file path (required for --mode video unless using --pi-video)")
-
-    # New flag:
-    parser.add_argument("--pi-video", action="store_true",
-                        help="Run on the Pi using IMG_7623.mp4 instead of a live camera feed")
+                        help="Video file path (required for --mode video)")
 
     parser.add_argument("--detector-backend", default="auto",
                         choices=["auto", "onnx", "hef"],
@@ -860,23 +909,11 @@ def main():
         initialize_environment(Path(args.requirements))
         return
 
-    # If --pi-video is used, override mode/source automatically
-    if args.pi_video:
-        args.mode = "video"
-        args.source = str(DEFAULT_PI_VIDEO)
-
     if not args.mode:
-        parser.error("--mode is required unless using --initialize or --pi-video")
+        parser.error("--mode is required unless using --initialize")
 
     if args.mode == "video" and not args.source:
         parser.error("--source is required for --mode video")
-
-    if args.pi_video:
-        pi_video_path = Path(args.source).expanduser().resolve()
-        if not pi_video_path.exists():
-            raise FileNotFoundError(
-                f"--pi-video was used but the file was not found: {pi_video_path}"
-            )
 
     classmap_path = Path(args.classmap).expanduser().resolve()
     if not classmap_path.exists():
@@ -908,8 +945,6 @@ def main():
     print(f"Audio mode:          {args.audio}")
     print(f"Detector selection:  {args.detector_backend}")
     print(f"Detector mode:       {detector_backend}")
-    print(f"Source mode:         {args.mode}")
-    print(f"Source path:         {args.source if args.mode == 'video' else 'live camera'}")
     print(f"Save video:          {args.save}" + (f" → {args.save_path}" if args.save else ""))
 
     run(
