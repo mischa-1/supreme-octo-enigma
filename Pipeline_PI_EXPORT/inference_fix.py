@@ -57,7 +57,7 @@ CLASSIFIER_ONNX = SCRIPT_DIR / "runs" / "classifier" / "best.onnx"
 CLASS_MAP_PATH = SCRIPT_DIR / "runs" / "classifier" / "class_map.json"
 REQUIREMENTS_PATH = SCRIPT_DIR / "requirements.txt"
 
-CONF_THRESH = 0.05
+CONF_THRESH = 0.30
 PADDING = 0.20
 SEQUENCE_LENGTH = 30
 IMG_SIZE = 128
@@ -571,6 +571,30 @@ class HefDetector(BaseDetector):
                 results = infer_pipeline.infer({self.input_name: np.expand_dims(inp, axis=0)})
 
         raw = results[self.output_names[0]]
+
+        raw = np.array(results[self.output_names[0]], dtype=np.float32)
+
+        # START
+        print("HEF raw shape:", raw.shape, "dtype:", raw.dtype, "min:", raw.min(), "max:", raw.max())
+        
+        flat = raw
+        if flat.ndim == 4:
+            flat = flat[0, 0]
+        elif flat.ndim == 3:
+            flat = flat[0]
+        
+        scores = flat[:, 4]
+        print("score stats:",
+              "min =", float(scores.min()),
+              "max =", float(scores.max()),
+              "mean =", float(scores.mean()))
+        
+        top_idx = np.argsort(scores)[-10:][::-1]
+        print("top 10 rows:")
+        for i in top_idx:
+            print(i, flat[i])
+        # STOP
+        
         return postprocess_hef_single_class(raw, frame.shape[1], frame.shape[0], CONF_THRESH)
 
 
