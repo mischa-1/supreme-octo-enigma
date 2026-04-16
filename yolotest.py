@@ -57,7 +57,7 @@ def main():
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     #print(f"Using device: {device}")
 
-    model = YOLO("yolov8n.pt")
+    model = YOLO("best.pt")
     model.to(device)
 
     #print("Debug 1")
