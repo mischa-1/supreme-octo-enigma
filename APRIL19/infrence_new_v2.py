@@ -722,7 +722,7 @@ def main():
 
     parser.add_argument("--detector", default=None)
     parser.add_argument("--classifier", default=None)
-    parser.add_argument("--classmap", default=CLASS_MAP_PATH)
+    parser.add_argument("--classmap", default=CLASSMAP_PATH)
 
     args = parser.parse_args()
     AUDIO_MODE = args.audio
