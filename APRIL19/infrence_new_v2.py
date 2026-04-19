@@ -65,7 +65,7 @@ DETECTOR_ONNX = ROOT / "detector.onnx"
 DETECTOR_HEF = ROOT / "detector.hef"
 
 # classifier-related files under runs/
-CLASSIFIER_DIR = ROOT / "runs" / "classifier_v4"
+CLASSIFIER_DIR = ROOT / "runs" / "classifier"
 CLASSMAP_PATH = CLASSIFIER_DIR / "class_map.json"
 CLASSIFIER_PT = CLASSIFIER_DIR / "weights" / "best.pt"
 CLASSIFIER_ONNX = CLASSIFIER_DIR / "weights" / "best.onnx"
