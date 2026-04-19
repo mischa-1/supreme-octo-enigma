@@ -1,0 +1,28 @@
+Manual installation notes
+=========================
+
+The following items may need to be installed manually on the Raspberry Pi
+and are not reliably handled by pip alone:
+
+1. picamera2
+   Usually install with apt:
+       sudo apt update
+       sudo apt install -y python3-picamera2
+
+2. Hailo runtime / hailo_platform
+   Required for detector.hef and AI HAT usage.
+   Install using the official Hailo software/runtime for your exact Hailo version.
+
+3. System audio libraries
+   Often needed for sounddevice / audio output:
+       sudo apt install -y libportaudio2 portaudio19-dev
+
+4. OpenCV system dependencies
+   Sometimes needed depending on image/video support:
+       sudo apt install -y libatlas-base-dev ffmpeg
+
+Notes
+-----
+- detector.hef is used in picamera mode.
+- detector.onnx or detector.pt can be used in webcam/video mode.
+- detector.pt requires ultralytics and its runtime dependencies.
