@@ -46,12 +46,29 @@ except ImportError:
 # DIRECT PATHS
 # ──────────────────────────────────────────────
 
-DETECTOR_PT = "/Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED1/runs/detect/runs/ped_signal/train_v14/weights/best.pt"
-DETECTOR_ONNX = "/Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED1/runs/detect/runs/ped_signal/train_v14/weights/best.onnx"
 
-CLASSIFIER_PT = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/best.pt"
-CLASSIFIER_ONNX = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/best.onnx"
-CLASS_MAP_PATH = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/class_map.json"
+#DETECTOR_PT = "/Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED1/runs/detect/runs/ped_signal/train_v14/weights/best.pt"
+#DETECTOR_ONNX = "/Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED1/runs/detect/runs/ped_signal/train_v14/weights/best.onnx"
+
+#CLASSIFIER_PT = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/best.pt"
+#CLASSIFIER_ONNX = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/best.onnx"
+#CLASS_MAP_PATH = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/class_map.json"
+
+
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+
+# detector model files in APRIL19
+DETECTOR_PT = ROOT / "detector.pt"
+DETECTOR_ONNX = ROOT / "detector.onnx"
+DETECTOR_HEF = ROOT / "detector.hef"
+
+# classifier-related files under runs/
+CLASSIFIER_DIR = ROOT / "runs" / "classifier_v4"
+CLASSMAP_PATH = CLASSIFIER_DIR / "class_map.json"
+CLASSIFIER_PT = CLASSIFIER_DIR / "weights" / "best.pt"
+CLASSIFIER_ONNX = CLASSIFIER_DIR / "weights" / "best.onnx"
 
 
 # ──────────────────────────────────────────────
