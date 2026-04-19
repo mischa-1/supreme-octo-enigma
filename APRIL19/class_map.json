@@ -1,0 +1,12 @@
+{
+  "classes": [
+    "stop",
+    "walk",
+    "caution"
+  ],
+  "class_to_idx": {
+    "stop": 0,
+    "walk": 1,
+    "caution": 2
+  }
+}
