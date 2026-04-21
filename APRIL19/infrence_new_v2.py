@@ -571,7 +571,7 @@ def open_picamera():
             time.sleep(0.5)
 
         def read(self):
-            return True, cv2.cvtColor(self.cam.capture_array(), cv2.COLOR_RGB2BGR)
+            return True, self.cam.capture_array()
 
         def isOpened(self):
             return True
