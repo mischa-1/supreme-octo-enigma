@@ -329,13 +329,8 @@ class AudioManager:
 
 class OnnxClassifier:
     def __init__(self, onnx_path, classes):
-        so = ort.SessionOptions()
-        so.log_severity_level = 3
-        so.log_verbosity_level = 0
-
         self.session = ort.InferenceSession(
             os.path.abspath(onnx_path),
-            sess_options=so,
             providers=["CPUExecutionProvider"]
         )
         self.input_name = self.session.get_inputs()[0].name
@@ -582,7 +577,8 @@ def open_picamera():
 # MAIN LOOP
 # ──────────────────────────────────────────────
 
-def run(source, detector, classifier, classes, os_mode, save=False, save_path="output.mp4", headless=False):
+def run(source, detector, classifier, classes, os_mode,
+        save=False, save_path="output.mp4", headless=False, rotate_ccw=False):
     audio = AudioManager(mode=AUDIO_MODE)
 
     buffer_4ch = deque(maxlen=SEQUENCE_LENGTH)
@@ -608,6 +604,7 @@ def run(source, detector, classifier, classes, os_mode, save=False, save_path="o
     print(f"Audio:      {AUDIO_MODE}")
     print(f"Channels:   {INPUT_CHANNELS} (RGB + motion)")
     print(f"Headless:   {headless}")
+    print(f"Rotate CCW: {rotate_ccw}")
     print("Running — press Q to quit, or Ctrl+C to stop cleanly\n")
 
     try:
@@ -617,6 +614,9 @@ def run(source, detector, classifier, classes, os_mode, save=False, save_path="o
             if not ret:
                 print("\nEnd of source.")
                 break
+
+            if rotate_ccw:
+                frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             h, w = frame.shape[:2]
 
@@ -724,6 +724,8 @@ def main():
     parser.add_argument("--save", action="store_true")
     parser.add_argument("--save-path", default=SAVE_PATH)
     parser.add_argument("--headless", action="store_true")
+    parser.add_argument("--rotate-ccw", action="store_true",
+                        help="Rotate incoming frames 90 degrees counterclockwise")
 
     parser.add_argument("--detector", default=None)
     parser.add_argument("--classifier", default=None)
@@ -757,6 +759,7 @@ def main():
     print(f"Classifier:   {classifier_path}")
     print(f"Audio:        {AUDIO_MODE}")
     print(f"Headless:     {args.headless}")
+    print(f"Rotate CCW:   {args.rotate_ccw}")
 
     if not os.path.exists(detector_path):
         raise FileNotFoundError(f"Detector file not found: {detector_path}")
@@ -781,6 +784,7 @@ def main():
         save=args.save,
         save_path=args.save_path,
         headless=args.headless,
+        rotate_ccw=args.rotate_ccw,
     )
 
 
