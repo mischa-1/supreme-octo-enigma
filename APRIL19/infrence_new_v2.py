@@ -329,8 +329,13 @@ class AudioManager:
 
 class OnnxClassifier:
     def __init__(self, onnx_path, classes):
+        so = ort.SessionOptions()
+        so.log_severity_level = 3
+        so.log_verbosity_level = 0
+
         self.session = ort.InferenceSession(
             os.path.abspath(onnx_path),
+            sess_options=so,
             providers=["CPUExecutionProvider"]
         )
         self.input_name = self.session.get_inputs()[0].name
