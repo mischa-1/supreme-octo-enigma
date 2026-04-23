@@ -46,20 +46,11 @@ except ImportError:
 # DIRECT PATHS
 # ──────────────────────────────────────────────
 
-
-#DETECTOR_PT = "/Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED1/runs/detect/runs/ped_signal/train_v14/weights/best.pt"
-#DETECTOR_ONNX = "/Users/pavlyyoussef/yolo-env/YoloDemo/YOLO_PED1/runs/detect/runs/ped_signal/train_v14/weights/best.onnx"
-
-#CLASSIFIER_PT = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/best.pt"
-#CLASSIFIER_ONNX = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/best.onnx"
-#CLASS_MAP_PATH = "/Users/pavlyyoussef/yolo-env/YoloDemo/Pipeline/runs/classifier_v4/class_map.json"
-
-
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
-# detector model files in APRIL19
+# detector model files
 DETECTOR_PT = ROOT / "detector.pt"
 DETECTOR_ONNX = ROOT / "detector.onnx"
 DETECTOR_HEF = ROOT / "detector.hef"
@@ -612,31 +603,39 @@ def run(source, detector, classifier, classes, os_mode, save=False, save_path="o
     print(f"Audio:      {AUDIO_MODE}")
     print(f"Channels:   {INPUT_CHANNELS} (RGB + motion)")
     print(f"Headless:   {headless}")
-    print("Running — press Q to quit\n")
+    print("Running — press Q to quit, or Ctrl+C to stop cleanly\n")
 
-    while True:
-        t0 = time.time()
-        ret, frame = source.read()
-        if not ret:
-            print("\nEnd of source.")
-            break
+    try:
+        while True:
+            t0 = time.time()
+            ret, frame = source.read()
+            if not ret:
+                print("\nEnd of source.")
+                break
 
-        h, w = frame.shape[:2]
+            h, w = frame.shape[:2]
 
-        detections = run_detector(detector, frame)
-        best_box = get_largest_box(detections)
+            detections = run_detector(detector, frame)
+            best_box = get_largest_box(detections)
 
-        if best_box is not None:
-            x1, y1, x2, y2, det_conf = best_box
-            x1, y1, x2, y2 = apply_padding(x1, y1, x2, y2, w, h)
-            crop = frame[y1:y2, x1:x2]
+            if best_box is not None:
+                x1, y1, x2, y2, det_conf = best_box
+                x1, y1, x2, y2 = apply_padding(x1, y1, x2, y2, w, h)
+                crop = frame[y1:y2, x1:x2]
 
-            if crop.size > 0:
-                tensor_4ch = preprocess_crop_4ch(crop, prev_crop_bgr)
-                buffer_4ch.append(tensor_4ch)
-                prev_crop_bgr = crop.copy()
-                box = (x1, y1, x2, y2, det_conf)
-                real_detection = True
+                if crop.size > 0:
+                    tensor_4ch = preprocess_crop_4ch(crop, prev_crop_bgr)
+                    buffer_4ch.append(tensor_4ch)
+                    prev_crop_bgr = crop.copy()
+                    box = (x1, y1, x2, y2, det_conf)
+                    real_detection = True
+                else:
+                    if buffer_4ch:
+                        repeated = buffer_4ch[-1].copy()
+                        repeated[3] = 0.0
+                        buffer_4ch.append(repeated)
+                    box = None
+                    real_detection = False
             else:
                 if buffer_4ch:
                     repeated = buffer_4ch[-1].copy()
@@ -644,64 +643,65 @@ def run(source, detector, classifier, classes, os_mode, save=False, save_path="o
                     buffer_4ch.append(repeated)
                 box = None
                 real_detection = False
-        else:
-            if buffer_4ch:
-                repeated = buffer_4ch[-1].copy()
-                repeated[3] = 0.0
-                buffer_4ch.append(repeated)
-            box = None
-            real_detection = False
 
-        current_fps = 1.0 / max(time.time() - t0, 1e-6)
-        fps_acc.append(current_fps)
+            current_fps = 1.0 / max(time.time() - t0, 1e-6)
+            fps_acc.append(current_fps)
 
-        if len(buffer_4ch) == SEQUENCE_LENGTH:
-            state, confidence = classifier.infer(buffer_4ch)
-            audio.update(state, real_detection)
-            print(
-                f"\r  {str(state):<10} {confidence * 100:5.1f}%"
-                f"  |  {'LIVE' if real_detection else 'rpt ':4s}"
-                f"  |  box: {'yes' if box else 'no ':3s}"
-                f"  |  {current_fps:5.1f} fps   ",
-                end=""
-            )
-        else:
-            print(
-                f"\r  Buffering {len(buffer_4ch)}/{SEQUENCE_LENGTH}"
-                f"  |  box: {'yes' if box else 'no ':3s}"
-                f"  |  {current_fps:5.1f} fps   ",
-                end=""
-            )
+            if len(buffer_4ch) == SEQUENCE_LENGTH:
+                state, confidence = classifier.infer(buffer_4ch)
+                audio.update(state, real_detection)
+                print(
+                    f"\r  {str(state):<10} {confidence * 100:5.1f}%"
+                    f"  |  {'LIVE' if real_detection else 'rpt ':4s}"
+                    f"  |  box: {'yes' if box else 'no ':3s}"
+                    f"  |  {current_fps:5.1f} fps   ",
+                    end=""
+                )
+            else:
+                print(
+                    f"\r  Buffering {len(buffer_4ch)}/{SEQUENCE_LENGTH}"
+                    f"  |  box: {'yes' if box else 'no ':3s}"
+                    f"  |  {current_fps:5.1f} fps   ",
+                    end=""
+                )
 
-        display = None
-        if (not headless) or writer is not None:
-            display = draw_overlay(
-                frame, box, state, confidence,
-                float(np.mean(fps_acc)), len(buffer_4ch),
-                real_detection, os_mode
-            )
+            display = None
+            if (not headless) or writer is not None:
+                display = draw_overlay(
+                    frame, box, state, confidence,
+                    float(np.mean(fps_acc)), len(buffer_4ch),
+                    real_detection, os_mode
+                )
 
-        if not headless and display is not None:
-            cv2.imshow("Pedestrian Signal", display)
-            if cv2.waitKey(1) & 0xFF in (ord("q"), ord("Q")):
-                break
+            if not headless and display is not None:
+                cv2.imshow("Pedestrian Signal", display)
+                if cv2.waitKey(1) & 0xFF in (ord("q"), ord("Q")):
+                    break
 
-        if writer is not None and display is not None:
-            writer.write(display)
+            if writer is not None and display is not None:
+                writer.write(display)
 
-    source.release()
-    if writer is not None:
-        writer.release()
-        print(f"\nSaved: {save_path}")
+    except KeyboardInterrupt:
+        print("\n\n[INFO] Ctrl+C detected — shutting down cleanly...")
 
-    if not headless:
-        cv2.destroyAllWindows()
+    finally:
+        try:
+            source.release()
+        except Exception:
+            pass
 
-    if fps_acc:
-        print(f"\nAverage FPS: {float(np.mean(fps_acc)):.2f}")
-        print(f"Max FPS:     {float(np.max(fps_acc)):.2f}")
+        if writer is not None:
+            writer.release()
+            print(f"\nSaved: {save_path}")
 
-    print("\nDone.")
+        if not headless:
+            cv2.destroyAllWindows()
+
+        if fps_acc:
+            print(f"\nAverage FPS: {float(np.mean(fps_acc)):.2f}")
+            print(f"Max FPS:     {float(np.max(fps_acc)):.2f}")
+
+        print("\nDone.")
 
 
 # ──────────────────────────────────────────────
