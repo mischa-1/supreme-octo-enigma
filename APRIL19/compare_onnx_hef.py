@@ -70,7 +70,13 @@ def load_hef(hef_path):
         format_type=FormatType.FLOAT32
     )
 
-    return target, network_group, network_group_params, input_vstreams_params, output_vstreams_params
+    return (
+        target,
+        network_group,
+        network_group_params,
+        input_vstreams_params,
+        output_vstreams_params,
+    )
 
 
 def run_hef(network_group, network_group_params, input_params, output_params, frame):
