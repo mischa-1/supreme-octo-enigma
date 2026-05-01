@@ -559,6 +559,9 @@ def parse_hailo_yolo_output(raw, orig_w, orig_h, in_w, in_h):
         return []
 
     preds = preds.astype(np.float32)
+    print("HEF output shape:", preds.shape)
+    print("conf min/max:", preds[:, 4].min(), preds[:, 4].max())
+    print("best row:", preds[np.argmax(preds[:, 4])])
 
     # If output is UINT8-like, confidence may need to be normalized.
     if preds[:, 4].size > 0 and preds[:, 4].max() > 1.5:
