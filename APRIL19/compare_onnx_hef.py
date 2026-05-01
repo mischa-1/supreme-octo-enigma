@@ -304,36 +304,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-  
-    print(f"ONNX FPS: {1 / avg_onnx:.2f}")
-    print(f"HEF  FPS: {1 / avg_hef:.2f}")
-
-    print(f"Speedup HEF vs ONNX: {avg_onnx / avg_hef:.2f}x")
-
-    print("\n--- Output similarity rough check ---")
-    mean_max_diff = np.mean([d["max_diff"] for d in agreement_diffs])
-    mean_mean_diff = np.mean([d["mean_diff"] for d in agreement_diffs])
-    mean_std_diff = np.mean([d["std_diff"] for d in agreement_diffs])
-    mean_conf_count_diff = np.mean([d["above_0.50_diff"] for d in agreement_diffs])
-
-    print(f"Average max-output difference:       {mean_max_diff:.6f}")
-    print(f"Average mean-output difference:      {mean_mean_diff:.6f}")
-    print(f"Average std-output difference:       {mean_std_diff:.6f}")
-    print(f"Average >0.50 activation difference: {mean_conf_count_diff:.2f}")
-
-    save_graphs(
-        frame_count,
-        onnx_times,
-        hef_times,
-        avg_onnx,
-        avg_hef,
-        agreement_diffs
-    )
-
-    print("\n[NOTE]")
-    print("This compares timing well, but the accuracy check is only approximate.")
-    print("For true accuracy, you need labeled images and YOLO post-processing/NMS.")
-
-
-if __name__ == "__main__":
-    main()
