@@ -1,17 +1,4 @@
 #!/usr/bin/env python3
-"""
-Pedestrian Signal Inference — v4 (RGB + Motion channel)
-
-OS flag controls runtime backend selection:
-
-  --os mac   -> detector .pt + classifier .pt
-  --os pi    -> detector .hef on Hailo AI HAT + classifier .onnx
-
-Examples:
-  python3 infrence_new_v2_hailo.py --os pi --mode picamera --audio tones --headless
-  python3 infrence_new_v2_hailo.py --os pi --mode picamera --detector detector.hef --audio tones --headless
-  python3 infrence_new_v2_hailo.py --os mac --mode video --source /path/to/video.mov
-"""
 
 import os
 import cv2
@@ -23,6 +10,7 @@ import struct
 import tempfile
 import subprocess
 from collections import deque
+from pathlib import Path
 
 import numpy as np
 import onnxruntime as ort
@@ -49,31 +37,18 @@ except ImportError:
     HAS_HAILO = False
 
 
-# ──────────────────────────────────────────────
-# DIRECT PATHS
-# ──────────────────────────────────────────────
-
-from pathlib import Path
-
 ROOT = Path(__file__).resolve().parent
 
-# detector model files
 DETECTOR_PT = ROOT / "detector.pt"
 DETECTOR_ONNX = ROOT / "detector.onnx"
 DETECTOR_HEF = ROOT / "detector.hef"
 
-# classifier-related files under runs/
 CLASSIFIER_DIR = ROOT / "runs" / "classifier"
 CLASSMAP_PATH = CLASSIFIER_DIR / "class_map.json"
 CLASSIFIER_PT = CLASSIFIER_DIR / "best.pt"
 CLASSIFIER_ONNX = CLASSIFIER_DIR / "best.onnx"
 
 
-# ──────────────────────────────────────────────
-# CONFIG
-# ──────────────────────────────────────────────
-
-#CONF_THRESH = 0.30
 CONF_THRESH = 0.05
 PADDING = 0.20
 SEQUENCE_LENGTH = 60
@@ -103,10 +78,6 @@ GRU_HIDDEN = 128
 GRU_LAYERS = 1
 NUM_CLASSES = 3
 
-
-# ──────────────────────────────────────────────
-# DEVICE
-# ──────────────────────────────────────────────
 
 def get_torch_device():
     if not HAS_TORCH:
@@ -140,10 +111,6 @@ def get_detector_device():
 DETECTOR_DEVICE = get_detector_device()
 
 
-# ──────────────────────────────────────────────
-# PREPROCESSING — V4 RGB + MOTION
-# ──────────────────────────────────────────────
-
 def preprocess_crop_4ch(curr_bgr, prev_bgr=None):
     curr = cv2.resize(curr_bgr, (IMG_SIZE, IMG_SIZE))
     curr_rgb = cv2.cvtColor(curr, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
@@ -172,10 +139,6 @@ def softmax(logits):
     e = np.exp(logits)
     return e / np.sum(e)
 
-
-# ──────────────────────────────────────────────
-# AUDIO
-# ──────────────────────────────────────────────
 
 def generate_tone(freq, duration, volume=0.6):
     t = np.linspace(0, duration, int(SAMPLE_RATE * duration), endpoint=False)
@@ -331,10 +294,6 @@ class AudioManager:
         self.last_state = state
 
 
-# ──────────────────────────────────────────────
-# CLASSIFIER BACKENDS
-# ──────────────────────────────────────────────
-
 class OnnxClassifier:
     def __init__(self, onnx_path, classes):
         self.session = ort.InferenceSession(
@@ -448,23 +407,7 @@ class PtClassifier:
         return self.classes[idx], float(probs[idx])
 
 
-# ──────────────────────────────────────────────
-# DETECTOR
-# ──────────────────────────────────────────────
-
 class HailoDetector:
-    """
-    Runs detector.hef on the Hailo AI HAT / Hailo-8L through HailoRT.
-
-    This class returns detections in the same format as the old YOLO detector:
-        [(x1, y1, x2, y2, confidence), ...]
-
-    NOTE:
-    Your HEF was previously reported as outputting something like:
-        NHWC(1x8400x5)
-    This code assumes each row is either [x, y, w, h, conf] or [x1, y1, x2, y2, conf].
-    If boxes appear in the wrong place, the HEF likely needs a model-specific YOLO decode step.
-    """
     def __init__(self, hef_path):
         if not HAS_HAILO:
             raise RuntimeError(
@@ -497,7 +440,6 @@ class HailoDetector:
         self.input_shape = input_infos[0].shape
         self.output_shape = output_infos[0].shape
 
-        # Hailo usually reports input shape as H, W, C for NHWC.
         self.in_h = int(self.input_shape[0])
         self.in_w = int(self.input_shape[1])
 
@@ -507,7 +449,7 @@ class HailoDetector:
         )
         self.output_params = hpf.OutputVStreamParams.make(
             self.network_group,
-            format_type=hpf.FormatType.UINT8,
+            format_type=hpf.FormatType.FLOAT32,
         )
 
         print(f"HEF detector loaded: {hef_path}")
@@ -539,61 +481,108 @@ class HailoDetector:
             pass
 
 
-def parse_hailo_yolo_output(raw, orig_w, orig_h, in_w, in_h):
-    """
-    Converts raw HEF output to a list of boxes:
-        [(x1, y1, x2, y2, confidence), ...]
+def nms_xyxy(boxes, scores, iou_thresh=0.45):
+    if len(boxes) == 0:
+        return []
 
-    This parser is intentionally conservative and may need tuning depending on how
-    your detector.hef was compiled/postprocessed.
-    """
+    boxes = boxes.astype(np.float32)
+    scores = scores.astype(np.float32)
+
+    x1 = boxes[:, 0]
+    y1 = boxes[:, 1]
+    x2 = boxes[:, 2]
+    y2 = boxes[:, 3]
+
+    areas = np.maximum(0, x2 - x1) * np.maximum(0, y2 - y1)
+    order = scores.argsort()[::-1]
+
+    keep = []
+
+    while order.size > 0:
+        i = order[0]
+        keep.append(i)
+
+        if order.size == 1:
+            break
+
+        rest = order[1:]
+
+        xx1 = np.maximum(x1[i], x1[rest])
+        yy1 = np.maximum(y1[i], y1[rest])
+        xx2 = np.minimum(x2[i], x2[rest])
+        yy2 = np.minimum(y2[i], y2[rest])
+
+        inter_w = np.maximum(0, xx2 - xx1)
+        inter_h = np.maximum(0, yy2 - yy1)
+        inter = inter_w * inter_h
+
+        union = areas[i] + areas[rest] - inter + 1e-6
+        iou = inter / union
+
+        order = rest[iou <= iou_thresh]
+
+    return keep
+
+
+def parse_hailo_yolo_output(raw, orig_w, orig_h, in_w, in_h):
     arr = np.asarray(raw)
     arr = np.squeeze(arr)
 
-    if arr.ndim == 2 and arr.shape[-1] == 5:
-        preds = arr
-    elif arr.ndim == 2 and arr.shape[0] == 5:
+    print("Raw HEF output shape:", arr.shape)
+    print("Raw HEF output dtype:", arr.dtype)
+
+    if arr.ndim == 2 and arr.shape[0] == 5:
         preds = arr.T
+    elif arr.ndim == 2 and arr.shape[1] == 5:
+        preds = arr
     else:
         print(f"[WARN] Unexpected HEF output shape: {arr.shape}")
         return []
 
     preds = preds.astype(np.float32)
-    print("HEF output shape:", preds.shape)
-    print("conf min/max:", preds[:, 4].min(), preds[:, 4].max())
-    print("best row:", preds[np.argmax(preds[:, 4])])
 
-    # If output is UINT8-like, confidence may need to be normalized.
-    if preds[:, 4].size > 0 and preds[:, 4].max() > 1.5:
-        preds[:, 4] = preds[:, 4] / 255.0
+    boxes_xywh = preds[:, :4]
+    scores = preds[:, 4]
 
-    detections = []
+    print("score min/max:", float(scores.min()), float(scores.max()))
+    print("best row:", preds[int(np.argmax(scores))])
+
+    keep = scores >= CONF_THRESH
+    boxes_xywh = boxes_xywh[keep]
+    scores = scores[keep]
+
+    if len(scores) == 0:
+        return []
+
+    if np.nanmax(boxes_xywh) <= 2.0:
+        boxes_xywh[:, [0, 2]] *= in_w
+        boxes_xywh[:, [1, 3]] *= in_h
+
+    x = boxes_xywh[:, 0]
+    y = boxes_xywh[:, 1]
+    bw = boxes_xywh[:, 2]
+    bh = boxes_xywh[:, 3]
+
+    boxes_xyxy = np.zeros_like(boxes_xywh, dtype=np.float32)
+    boxes_xyxy[:, 0] = x - bw / 2.0
+    boxes_xyxy[:, 1] = y - bh / 2.0
+    boxes_xyxy[:, 2] = x + bw / 2.0
+    boxes_xyxy[:, 3] = y + bh / 2.0
+
+    boxes_xyxy[:, 0] = np.clip(boxes_xyxy[:, 0], 0, in_w - 1)
+    boxes_xyxy[:, 1] = np.clip(boxes_xyxy[:, 1], 0, in_h - 1)
+    boxes_xyxy[:, 2] = np.clip(boxes_xyxy[:, 2], 0, in_w - 1)
+    boxes_xyxy[:, 3] = np.clip(boxes_xyxy[:, 3], 0, in_h - 1)
+
+    keep_nms = nms_xyxy(boxes_xyxy, scores, iou_thresh=0.45)
+
     sx = orig_w / float(in_w)
     sy = orig_h / float(in_h)
 
-    for row in preds:
-        a, b, c, d, conf = row
-
-        if conf < CONF_THRESH:
-            continue
-
-        # Handle normalized coordinates.
-        if max(a, b, c, d) <= 1.5:
-            a *= in_w
-            c *= in_w
-            b *= in_h
-            d *= in_h
-
-        # Try xywh center format first.
-        x_center, y_center, bw, bh = a, b, c, d
-        x1 = x_center - bw / 2.0
-        y1 = y_center - bh / 2.0
-        x2 = x_center + bw / 2.0
-        y2 = y_center + bh / 2.0
-
-        # If xywh interpretation is invalid or suspicious, fall back to xyxy.
-        if x2 <= x1 or y2 <= y1 or bw > in_w * 1.5 or bh > in_h * 1.5:
-            x1, y1, x2, y2 = a, b, c, d
+    detections = []
+    for i in keep_nms:
+        x1, y1, x2, y2 = boxes_xyxy[i]
+        conf = float(scores[i])
 
         x1 = int(np.clip(x1 * sx, 0, orig_w - 1))
         y1 = int(np.clip(y1 * sy, 0, orig_h - 1))
@@ -601,7 +590,7 @@ def parse_hailo_yolo_output(raw, orig_w, orig_h, in_w, in_h):
         y2 = int(np.clip(y2 * sy, 0, orig_h - 1))
 
         if x2 > x1 and y2 > y1:
-            detections.append((x1, y1, x2, y2, float(conf)))
+            detections.append((x1, y1, x2, y2, conf))
 
     return detections
 
@@ -614,7 +603,7 @@ def load_detector(path):
     if path.lower().endswith(".hef"):
         return HailoDetector(path)
 
-    return YOLO(path)
+    return YOLO(path, task="detect")
 
 
 def run_detector(model, frame):
@@ -641,10 +630,6 @@ def apply_padding(x1, y1, x2, y2, w, h):
     py = int((y2 - y1) * PADDING)
     return max(0, x1 - px), max(0, y1 - py), min(w, x2 + px), min(h, y2 + py)
 
-
-# ──────────────────────────────────────────────
-# DISPLAY
-# ──────────────────────────────────────────────
 
 STATE_COLORS = {
     "walk": (0, 255, 0),
@@ -692,10 +677,6 @@ def draw_overlay(frame, box, state, confidence, fps, buf_len, real_det, os_mode)
     return display
 
 
-# ──────────────────────────────────────────────
-# VIDEO SOURCES
-# ──────────────────────────────────────────────
-
 def open_webcam():
     cap = cv2.VideoCapture(1)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
@@ -741,10 +722,6 @@ def open_picamera():
 
     return PiCam()
 
-
-# ──────────────────────────────────────────────
-# MAIN LOOP
-# ──────────────────────────────────────────────
 
 def run(source, detector, classifier, classes, os_mode,
         save=False, save_path="output.mp4", headless=False, rotate_ccw=False):
@@ -883,10 +860,6 @@ def run(source, detector, classifier, classes, os_mode,
 
         print("\nDone.")
 
-
-# ──────────────────────────────────────────────
-# ENTRY POINT
-# ──────────────────────────────────────────────
 
 def main():
     global AUDIO_MODE
