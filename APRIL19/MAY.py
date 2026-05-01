@@ -535,7 +535,7 @@ def parse_hailo_yolo_outputs(outputs, orig_w, orig_h, in_w, in_h):
             box_maps.append(arr)
         elif arr.ndim == 3 and arr.shape[-1] == 1:
             score_maps.append(arr)
-        elif arr.ndim == 2 and arr.shape[-1] == 1:
+        elif arr.ndim == 2:
             score_maps.append(arr[..., np.newaxis])
 
     box_maps = sorted(box_maps, key=lambda x: x.shape[0], reverse=True)
