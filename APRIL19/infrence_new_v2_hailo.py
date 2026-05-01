@@ -73,7 +73,8 @@ CLASSIFIER_ONNX = CLASSIFIER_DIR / "best.onnx"
 # CONFIG
 # ──────────────────────────────────────────────
 
-CONF_THRESH = 0.30
+#CONF_THRESH = 0.30
+CONF_THRESH = 0.05
 PADDING = 0.20
 SEQUENCE_LENGTH = 60
 IMG_SIZE = 128
