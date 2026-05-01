@@ -1,0 +1,855 @@
+[2026-04-30 21:27:45.271] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:45.275] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:45.275] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:45.275] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:45.276] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:45.276] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:45.276] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.276] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:45.276] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.292] [2354] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:45.292] [2353] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:45.292] [2353] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:45.292] [2353] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:45.292] [2353] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.292] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.292] [2354] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.292] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.292] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.293] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.60918 ms
+[2026-04-30 21:27:45.293] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.61831 ms
+[2026-04-30 21:27:45.446] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.272961 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.446] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.336701 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.446] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:45.446] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:45.447] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.463] [2358] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:45.463] [2358] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:45.463] [2358] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:45.463] [2359] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:45.463] [2358] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.463] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.463] [2359] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.463] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.463] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.464] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.609791 ms
+[2026-04-30 21:27:45.464] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.618403 ms
+[2026-04-30 21:27:45.617] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.276535 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.617] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.299998 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.617] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:45.617] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:45.618] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.635] [2363] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:45.635] [2363] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:45.635] [2364] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:45.635] [2363] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:45.635] [2363] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.635] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.635] [2364] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.635] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.635] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.636] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.605532 ms
+[2026-04-30 21:27:45.636] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.614051 ms
+[2026-04-30 21:27:45.794] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.280535 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.794] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.303924 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.794] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:45.794] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:45.795] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.812] [2369] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:45.812] [2368] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:45.812] [2368] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:45.812] [2368] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:45.812] [2368] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.812] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.812] [2369] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.812] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.812] [2367] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:45.812] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.812] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.602533 ms
+[2026-04-30 21:27:45.812] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.61081 ms
+[2026-04-30 21:27:45.969] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.258424 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.969] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.281165 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:45.969] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:45.969] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:45.970] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:45.987] [2373] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:45.987] [2373] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:45.987] [2373] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:45.987] [2374] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:45.987] [2373] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.987] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.987] [2374] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:45.987] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.987] [2372] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:45.987] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:45.988] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601847 ms
+[2026-04-30 21:27:45.988] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.610699 ms
+[2026-04-30 21:27:46.142] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.272627 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.142] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.29948 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.142] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:46.142] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:46.143] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.159] [2378] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:46.159] [2378] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:46.159] [2378] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:46.159] [2379] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:46.159] [2378] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.159] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.159] [2379] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.159] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.159] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.160] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.611551 ms
+[2026-04-30 21:27:46.160] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.621032 ms
+[2026-04-30 21:27:46.314] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.277424 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.314] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.301146 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.314] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:46.314] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:46.315] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.332] [2383] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:46.332] [2383] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:46.332] [2383] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:46.332] [2384] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:46.332] [2383] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.332] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.332] [2384] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.332] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.332] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.333] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.606606 ms
+[2026-04-30 21:27:46.333] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.61544 ms
+[2026-04-30 21:27:46.489] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.27622 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.489] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.299535 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.489] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:46.489] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:46.490] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.507] [2388] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:46.507] [2388] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:46.507] [2388] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:46.507] [2389] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:46.507] [2388] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.507] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.507] [2389] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.507] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.507] [2387] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:46.507] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.508] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601939 ms
+[2026-04-30 21:27:46.508] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.631569 ms
+[2026-04-30 21:27:46.665] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.270165 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.665] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.293257 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.665] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:46.665] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:46.666] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.683] [2394] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:46.683] [2393] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:46.683] [2393] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:46.683] [2393] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:46.683] [2393] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.683] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.683] [2394] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.683] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.683] [2392] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:46.683] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.683] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.604606 ms
+[2026-04-30 21:27:46.683] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.613458 ms
+[2026-04-30 21:27:46.838] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.278257 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.838] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.301442 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:46.838] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:46.838] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:46.839] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:46.855] [2399] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:46.855] [2398] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:46.855] [2398] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:46.855] [2398] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:46.855] [2398] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.855] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.855] [2399] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:46.855] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.855] [2397] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:46.855] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:46.856] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.605254 ms
+[2026-04-30 21:27:46.856] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.614161 ms
+[2026-04-30 21:27:47.013] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.25635 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.013] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.28222 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.013] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:47.013] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:47.014] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.031] [2404] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:47.031] [2403] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:47.031] [2403] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:47.031] [2403] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:47.031] [2403] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.031] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.031] [2404] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.031] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.031] [2402] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:47.031] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.032] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.600088 ms
+[2026-04-30 21:27:47.032] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.608162 ms
+[2026-04-30 21:27:47.190] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.27472 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.190] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.298405 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.190] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:47.190] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:47.191] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.207] [2408] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:47.207] [2408] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:47.207] [2408] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:47.207] [2409] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:47.207] [2408] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.207] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.207] [2409] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.207] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.207] [2407] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:47.207] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.208] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601588 ms
+[2026-04-30 21:27:47.208] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.609921 ms
+[2026-04-30 21:27:47.361] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.275665 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.361] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.298609 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.361] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:47.361] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:47.362] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.379] [2414] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:47.379] [2413] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:47.379] [2413] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:47.379] [2413] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:47.379] [2413] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.379] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.379] [2414] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.379] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.379] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.380] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.608014 ms
+[2026-04-30 21:27:47.380] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.616439 ms
+[2026-04-30 21:27:47.532] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.273091 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.532] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.296035 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.532] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:47.532] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:47.533] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.552] [2418] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:47.552] [2418] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:47.552] [2419] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:47.552] [2418] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:47.552] [2418] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.552] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.552] [2419] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.552] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.552] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.552] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.607829 ms
+[2026-04-30 21:27:47.552] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.637736 ms
+[2026-04-30 21:27:47.706] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.270035 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.706] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.327757 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.706] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:47.706] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:47.707] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.724] [2424] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:47.724] [2423] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:47.724] [2423] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:47.724] [2423] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:47.724] [2423] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.724] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.724] [2424] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.724] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.724] [2422] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:47.724] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.725] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.602106 ms
+[2026-04-30 21:27:47.725] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.610829 ms
+[2026-04-30 21:27:47.882] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.276627 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.882] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.299294 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:47.882] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:47.882] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:47.883] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:47.901] [2429] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:47.901] [2428] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:47.901] [2428] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:47.901] [2428] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:47.901] [2428] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.901] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.901] [2429] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:47.901] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.901] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:47.901] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.609328 ms
+[2026-04-30 21:27:47.901] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.617643 ms
+[2026-04-30 21:27:48.054] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.27259 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.054] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.29872 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.054] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:48.055] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.056] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:48.056] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.072] [2434] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:48.072] [2433] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:48.072] [2433] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:48.072] [2433] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:48.072] [2433] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.072] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.072] [2434] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.072] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.072] [2432] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:48.072] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.073] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601736 ms
+[2026-04-30 21:27:48.073] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.610292 ms
+[2026-04-30 21:27:48.226] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.270127 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.226] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.293535 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.226] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:48.226] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:48.226] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:48.227] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.243] [2438] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:48.243] [2438] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:48.243] [2438] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:48.243] [2439] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:48.243] [2438] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.243] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.243] [2439] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.243] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.243] [2437] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:48.243] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.244] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.59981 ms
+[2026-04-30 21:27:48.244] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.60894 ms
+[2026-04-30 21:27:48.398] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.277034 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.398] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.300719 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.398] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:48.398] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:48.399] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.415] [2443] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:48.415] [2443] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:48.415] [2443] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:48.415] [2444] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:48.415] [2443] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.415] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.415] [2444] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.415] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.415] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.416] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.613496 ms
+[2026-04-30 21:27:48.416] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.622514 ms
+[2026-04-30 21:27:48.578] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.274331 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.578] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.297201 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.578] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:48.578] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:48.579] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.597] [2449] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:48.597] [2448] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:48.597] [2448] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:48.597] [2448] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:48.597] [2448] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.597] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.597] [2449] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.597] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.597] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.598] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.606087 ms
+[2026-04-30 21:27:48.598] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.614273 ms
+[2026-04-30 21:27:48.751] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.273572 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.751] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.311534 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:48.752] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:48.753] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.753] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:48.753] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.769] [2453] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:48.769] [2453] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:48.769] [2454] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:48.769] [2453] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:48.769] [2453] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.769] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.769] [2454] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.769] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.769] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.770] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.607921 ms
+[2026-04-30 21:27:48.770] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.616477 ms
+[2026-04-30 21:27:48.924] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.27385 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.297424 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:48.925] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:48.926] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:48.926] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:48.926] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.926] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:48.926] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:48.942] [2458] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:48.942] [2458] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:48.942] [2459] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:48.942] [2458] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:48.942] [2458] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.942] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.942] [2459] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:48.942] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.942] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:48.943] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.60694 ms
+[2026-04-30 21:27:48.943] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.615495 ms
+[2026-04-30 21:27:49.098] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.274869 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.098] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.300701 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.098] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:49.098] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:49.099] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.115] [2463] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:49.115] [2463] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:49.115] [2463] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:49.115] [2464] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:49.115] [2463] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.115] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.115] [2464] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.115] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.115] [2462] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:49.115] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.116] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.60144 ms
+[2026-04-30 21:27:49.116] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.610014 ms
+[2026-04-30 21:27:49.278] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.275572 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.278] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.298646 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.278] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:49.278] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:49.278] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:49.278] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:49.279] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.295] [2468] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:49.295] [2468] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:49.295] [2468] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:49.295] [2469] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:49.295] [2468] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.295] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.295] [2469] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.295] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.295] [2467] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:49.295] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.296] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.602107 ms
+[2026-04-30 21:27:49.296] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.611644 ms
+[2026-04-30 21:27:49.447] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.284535 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.447] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.307368 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.448] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:49.448] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:49.448] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:49.448] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:49.448] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:49.448] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:49.449] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:49.449] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:49.449] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.449] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:49.449] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.466] [2474] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:49.466] [2473] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:49.466] [2473] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:49.466] [2473] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:49.466] [2473] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.466] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.466] [2474] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.466] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.466] [2472] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:49.466] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.466] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.602662 ms
+[2026-04-30 21:27:49.466] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.611328 ms
+[2026-04-30 21:27:49.617] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.279702 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.617] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.302998 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.617] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:49.617] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:49.618] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.636] [2479] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:49.636] [2478] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:49.636] [2478] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:49.636] [2478] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:49.636] [2478] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.636] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.636] [2479] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.636] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.636] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.637] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.60518 ms
+[2026-04-30 21:27:49.637] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.613754 ms
+[2026-04-30 21:27:49.789] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.27259 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.789] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.29546 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.789] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:49.790] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:49.791] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.808] [2484] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:49.808] [2483] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:49.808] [2483] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:49.808] [2483] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:49.808] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.808] [2484] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.808] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.808] [2482] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:49.808] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.808] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601829 ms
+[2026-04-30 21:27:49.808] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.609866 ms
+[2026-04-30 21:27:49.965] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.274312 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.965] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.297128 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:49.965] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:49.967] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:49.968] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:49.985] [2488] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:49.985] [2488] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:49.985] [2488] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:49.985] [2489] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:49.985] [2488] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.985] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.985] [2489] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:49.985] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.985] [2487] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:49.985] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:49.986] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601902 ms
+[2026-04-30 21:27:49.986] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.61057 ms
+[2026-04-30 21:27:50.137] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.275813 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.137] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.328738 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.137] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:50.137] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:50.138] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.155] [2494] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:50.155] [2493] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:50.155] [2493] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:50.155] [2493] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:50.155] [2493] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.155] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.155] [2494] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.155] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.155] [2492] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:50.156] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.156] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.604125 ms
+[2026-04-30 21:27:50.156] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.613088 ms
+[2026-04-30 21:27:50.309] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.278554 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.309] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.300775 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.309] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:50.311] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:50.312] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.329] [2498] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:50.329] [2498] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:50.329] [2498] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:50.329] [2499] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:50.329] [2498] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.329] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.329] [2499] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.329] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.329] [2497] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:50.329] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.329] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.601606 ms
+[2026-04-30 21:27:50.329] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.61005 ms
+[2026-04-30 21:27:50.481] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.276109 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.481] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.298812 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.481] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:50.481] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:50.482] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.499] [2503] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:50.499] [2503] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:50.499] [2504] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:50.499] [2503] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:50.499] [2503] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.499] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.500] [2504] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.500] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.500] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.500] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.605903 ms
+[2026-04-30 21:27:50.500] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.634569 ms
+[2026-04-30 21:27:50.657] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.274646 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.657] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.297294 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.657] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:50.657] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:50.658] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.675] [2509] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:50.675] [2508] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:50.675] [2508] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:50.675] [2508] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:50.675] [2508] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.675] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.675] [2509] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.675] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.675] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.676] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.618976 ms
+[2026-04-30 21:27:50.676] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.627884 ms
+[2026-04-30 21:27:50.833] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.264813 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.833] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.288109 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:50.833] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:50.833] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:50.834] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:50.850] [2514] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:50.850] [2513] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:50.850] [2513] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:50.850] [2513] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:50.850] [2513] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.850] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.851] [2514] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:50.851] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.851] [2512] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:50.851] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:50.851] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.60244 ms
+[2026-04-30 21:27:50.851] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.611218 ms
+[2026-04-30 21:27:51.009] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.268091 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:51.009] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.321127 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:51.009] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:51.009] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:51.010] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:51.027] [2518] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:51.027] [2518] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:51.027] [2518] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:51.027] [2519] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:51.027] [2518] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:51.027] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:51.027] [2519] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:51.027] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:51.027] [2517] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:51.027] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:51.028] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.602348 ms
+[2026-04-30 21:27:51.028] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.611477 ms
+[2026-04-30 21:27:51.180] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.279146 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:51.180] [2007] [HailoRT] [info] [core_op.cpp:156] [activate] Activating detectorYOLO26n took 0.302461 milliseconds. Note that the function is asynchronous and thus the network is not fully activated yet.
+[2026-04-30 21:27:51.180] [2007] [HailoRT] [info] [edge_elements.cpp:52] [create] Created (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800)
+[2026-04-30 21:27:51.180] [2007] [HailoRT] [info] [queue_elements.cpp:284] [create] Created (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s)
+[2026-04-30 21:27:51.181] [2007] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2026-04-30 21:27:51.181] [2007] [HailoRT] [info] [vstream.cpp:754] [InputVStreamImpl] Creating detectorYOLO26n/input_layer1...
+[2026-04-30 21:27:51.181] [2007] [HailoRT] [info] [vstream_builder.cpp:102] [create_inputs] Input pipeline 'detectorYOLO26n/input_layer1': (PreInferEl1detectorYOLO26n/input_layer1 | Quantization - src_type: FLOAT32, dst_type UINT8, limvals_min: 0, limvals_max: 1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3)) >> (PushQEl1detectorYOLO26n/input_layer1 | timeout: 10s) >> (HwWriteEl1detectorYOLO26n/input_layer1 | hw_frame_size: 1228800) >> HW
+[2026-04-30 21:27:51.181] [2007] [HailoRT] [info] [edge_elements.cpp:287] [create] Created (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000)
+[2026-04-30 21:27:51.181] [2007] [HailoRT] [info] [queue_elements.cpp:657] [create] Created (PullQEl_hw_read0detectorYOLO26n/concat23)
+[2026-04-30 21:27:51.181] [2007] [HailoRT] [info] [filter_elements.cpp:372] [create] Created (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694)
+[2026-04-30 21:27:51.182] [2007] [HailoRT] [info] [queue_elements.cpp:800] [create] Created (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:51.182] [2007] [HailoRT] [info] [vstream.cpp:1114] [OutputVStreamImpl] Creating detectorYOLO26n/concat23...
+[2026-04-30 21:27:51.182] [2007] [HailoRT] [info] [vstream_builder.cpp:220] [create_outputs] Output pipeline 'detectorYOLO26n/concat23': HW >> (HwReadEl0detectorYOLO26n/concat23 | hw_frame_size: 42000) >> (PullQEl_hw_read0detectorYOLO26n/concat23) >> (PostInferEl0detectorYOLO26n/concat23 | Quantization - src_type: UINT8, dst_type FLOAT32, limvals_min: 0, limvals_max: 687.694) >> (UserBuffQEl0detectorYOLO26n/concat23 | timeout: 10s)
+[2026-04-30 21:27:51.198] [2523] [HailoRT] [info] [vdevice_native_stream.cpp:331] [read_impl] Failed read from stream HAILO_STREAM_ABORT(63) (device: 0001:01:00.0)
+[2026-04-30 21:27:51.198] [2523] [HailoRT] [info] [edge_elements.cpp:396] [run_pull] Reading from stream was aborted!
+[2026-04-30 21:27:51.198] [2523] [HailoRT] [info] [queue_elements.cpp:738] [run_in_thread] run_pull of queue element PullQEl_hw_read0detectorYOLO26n/concat23 was aborted!
+[2026-04-30 21:27:51.198] [2524] [HailoRT] [info] [queue_elements.cpp:855] [run_in_thread] Shutdown event was signaled in dequeue of UserBuffQEl0detectorYOLO26n/concat23!
+[2026-04-30 21:27:51.198] [2523] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PullQEl_hw_read0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:51.198] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PullQEl_hw_read0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:51.198] [2524] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element UserBuffQEl0detectorYOLO26n/concat23 is not running anymore, exiting..
+[2026-04-30 21:27:51.198] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element UserBuffQEl0detectorYOLO26n/concat23 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:51.198] [2522] [HailoRT] [info] [queue_elements.cpp:68] [operator()] Thread in element PushQEl1detectorYOLO26n/input_layer1 is not running anymore, exiting..
+[2026-04-30 21:27:51.198] [2007] [HailoRT] [info] [queue_elements.cpp:46] [~BaseQueueElement] Queue element PushQEl1detectorYOLO26n/input_layer1 has 0 frames in his Queue on destruction
+[2026-04-30 21:27:51.199] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.602458 ms
+[2026-04-30 21:27:51.199] [2007] [HailoRT] [info] [core_op.cpp:186] [deactivate] Deactivating took 0.611125 ms
